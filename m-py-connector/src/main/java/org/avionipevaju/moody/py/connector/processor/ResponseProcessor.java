@@ -11,8 +11,7 @@ public class ResponseProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        exchange.getIn().setBody("Response");
-        LOGGER.info("Exchange Body: {}", exchange.getIn().getBody());
-        LOGGER.info("Exchange Headers: {}", exchange.getIn().getHeaders());
+        LOGGER.info("Response Body: {}", exchange.getIn().getBody(String.class));
+        LOGGER.debug("Exchange Headers: {}", exchange.getIn().getHeaders());
     }
 }

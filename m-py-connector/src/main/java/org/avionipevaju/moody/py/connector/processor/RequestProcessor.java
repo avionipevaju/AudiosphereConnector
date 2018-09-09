@@ -11,9 +11,9 @@ public class RequestProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        exchange.getIn().setBody("Request");
-        LOGGER.info("Exchange Body: {}", exchange.getIn().getBody());
-        LOGGER.info("Exchange Headers: {}", exchange.getIn().getHeaders());
+        exchange.getIn().setBody("Dummy Request");
+        LOGGER.info("Request Body: {}", exchange.getIn().getBody());
+        LOGGER.debug("Exchange Headers: {}", exchange.getIn().getHeaders());
 
     }
 }

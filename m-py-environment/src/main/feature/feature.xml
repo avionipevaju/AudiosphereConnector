@@ -13,6 +13,7 @@
         <feature>camel-jaxb</feature>
         <feature>camel-jackson</feature>
         <feature>camel-http4</feature>
+        <feature>camel-netty4</feature>
         <feature>camel-netty4-http</feature>
         <feature>camel-metrics</feature>
     </feature>

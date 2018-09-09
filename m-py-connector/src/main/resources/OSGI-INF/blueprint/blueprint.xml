@@ -14,8 +14,23 @@
         </cm:default-properties>
     </cm:property-placeholder>
 
+    <!-- netty http bootstrap configuration -->
+    <bean id="configuration" class="org.apache.camel.component.netty4.http.NettySharedHttpServerBootstrapConfiguration">
+        <property name="port" value="8888"/>
+        <property name="host" value="0.0.0.0"/>
+    </bean>
+
+    <!-- the netty http server -->
+    <bean id="httpServer" class="org.apache.camel.component.netty4.http.DefaultNettySharedHttpServer"
+          init-method="start" destroy-method="stop">
+        <property name="nettyServerBootstrapConfiguration" ref="configuration"/>
+    </bean>
+
+    <!-- export in the OSGi server registry so we can use it from the Camel application bundles-->
+    <service ref="httpServer" interface="org.apache.camel.component.netty4.http.NettySharedHttpServer"/>
+
     <!-- Jackson Object Mapper -->
-    <bean id="jacksonObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"></bean>
+    <bean id="jacksonObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
 
     <!-- Processors -->
     <bean id="requestProcessor" class="org.avionipevaju.moody.py.connector.processor.RequestProcessor"/>
@@ -32,5 +47,9 @@
     <!-- Camel Context -->
     <camelContext id="m-py-context" xmlns="http://camel.apache.org/schema/blueprint">
         <routeBuilder ref="testRouteBuilder"/>
+
+        <restConfiguration component="netty4-http" bindingMode="auto" contextPath="/m-py/api">
+            <endpointProperty key="nettySharedHttpServer" value="#httpServer" />
+        </restConfiguration>
     </camelContext>
 </blueprint>

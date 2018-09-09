@@ -11,6 +11,7 @@ public class ExceptionHandlingProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        LOGGER.error("Error occurred with Body: {} and Headers: {}", exchange.getIn().getBody(), exchange.getIn().getHeaders());
+        Exception exception = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
+        LOGGER.error("{} Body: {} and Headers: {}", exception.getMessage(), exchange.getIn().getBody(), exchange.getIn().getHeaders(), exception);
     }
 }
