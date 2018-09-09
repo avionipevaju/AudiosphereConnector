@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.4.0" name="${artifactId}">
     <repository>mvn:org.apache.camel.karaf/apache-camel/${camel.version}/xml/features</repository>
+    <repository>mvn:io.hawt/hawtio-karaf/${hawtio.version}/xml/features</repository>
     <feature name="${artifactId}" description="${name}" version="${version}">
         <feature>shell</feature>
         <feature>war</feature>
+        <feature>hawtio</feature>
         <feature>aries-blueprint</feature>
         <feature>camel</feature>
         <feature>camel-core</feature>

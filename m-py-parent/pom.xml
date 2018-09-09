@@ -33,6 +33,7 @@
 
     <properties>
         <camel.version>2.21.0</camel.version>
+        <hawtio.version>2.0.3</hawtio.version>
     </properties>
 
     <dependencyManagement>
