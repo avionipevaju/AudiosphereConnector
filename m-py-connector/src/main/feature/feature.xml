@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.4.0" name="${artifactId}">
+    <feature name="${artifactId}" description="${name}" version="${version}">
+        <configfile finalname="/etc/configuration.cfg" override="false">
+            mvn:${groupId}/${artifactId}/${version}/cfg/config
+        </configfile>
+    </feature>
+</features>

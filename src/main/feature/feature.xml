@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.4.0" name="${artifactId}">
+    <repository>mvn:org.avionipevaju.moody.py/m-py-environment/${environment.version}/xml/features</repository>
+    <feature name="${artifactId}" description="${name}" version="${version}">
+        <feature>m-py-environment</feature>
+        <bundle>mvn:org.avionipevaju.moody.py/m-py-connector/${connector.version}</bundle>
+    </feature>
+</features>

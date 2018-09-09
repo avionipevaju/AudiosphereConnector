@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>m-py-core</artifactId>
+        <groupId>org.avionipevaju.moody.py</groupId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>m-py-parent</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <name>MoodyPy Connector Parent</name>
+
+    <description>Parent pom for MoodyPy Connector.</description>
+
+    <organization>
+        <name>Racunarski Fakultet - RAF</name>
+        <url>raf.edu.rs</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>Nikola Antic</name>
+            <email>nantic14@raf.rs</email>
+            <id>nantic14</id>
+        </developer>
+    </developers>
+
+    <properties>
+        <camel.version>2.21.0</camel.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-blueprint</artifactId>
+                <version>${camel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-core</artifactId>
+                <version>${camel.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-blueprint</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+
+</project>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0
+    https://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+    http://camel.apache.org/schema/blueprint
+    http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
+
+    <!-- Configuration File -->
+    <cm:property-placeholder persistent-id="configuration" update-strategy="reload">
+        <cm:default-properties>
+            <cm:property name="key" value="def-value"/>
+        </cm:default-properties>
+    </cm:property-placeholder>
+
+    <!-- Jackson Object Mapper -->
+    <bean id="jacksonObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"></bean>
+
+    <!-- Processors -->
+    <bean id="requestProcessor" class="org.avionipevaju.moody.py.connector.processor.RequestProcessor"/>
+    <bean id="responseProcessor" class="org.avionipevaju.moody.py.connector.processor.ResponseProcessor"/>
+    <bean id="exceptionHandlingProcessor" class="org.avionipevaju.moody.py.connector.processor.ExceptionHandlingProcessor"/>
+
+    <!-- Route Builders -->
+    <bean id="testRouteBuilder" class="org.avionipevaju.moody.py.connector.route.TestRouteBuilder">
+        <property name="requestProcessor" ref="requestProcessor"/>
+        <property name="responseProcessor" ref="responseProcessor"/>
+        <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
+    </bean>
+
+    <!-- Camel Context -->
+    <camelContext id="m-py-context" xmlns="http://camel.apache.org/schema/blueprint">
+        <routeBuilder ref="testRouteBuilder"/>
+    </camelContext>
+</blueprint>
