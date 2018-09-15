@@ -6,22 +6,20 @@ public class TestRouteBuilder extends AbstractRouteBuilder {
 
     public void configure() throws Exception {
 
-        from("timer:testTimer?period=30s").id("restRoute")
-                .description("Test Route to demonstrate Apache Camel Route Builder")
+        from("timer:twitScheduler?period=12h").id("twitScheduler")
+                .description("Initiates MoodyPy twit posting based on the current weather periodically")
                 .doTry()
                     .process(getRequestProcessor())
                     .setHeader(Exchange.HTTP_METHOD, constant("GET"))
-                    .to("http4://localhost:8888/m-py/api/hello/Sonja")
+                    .to("http4://localhost:8887/execute")
                     .process(getResponseProcessor())
                 .doCatch(Throwable.class)
                     .process(getExceptionHandlingProcessor());
 
-        rest().get("/hello/{name}").id("restEndpoint").outType(String.class).produces("text/plain")
-                .description("Rest endpoint")
+        rest().get("/scheduler/twit").id("manualTwitScheduler").outType(String.class).produces("application/json")
+                .description("")
                 .route()
-                .process(exchange -> {
-                    String name = exchange.getIn().getHeader("name", String.class);
-                    exchange.getOut().setBody("Hello ".concat(name));
-                });
+                .setHeader(Exchange.HTTP_METHOD, constant("GET"))
+                .to("http4://localhost:8887/execute");
     }
 }
