@@ -21,7 +21,7 @@ public class SchedulerRouteBuilder extends AbstractRouteBuilder {
                 .description("Manually post content on Twitter with MoodyPy")
                 .route()
                 .setHeader(Exchange.HTTP_METHOD, constant("GET"))
-                .to(getEndpoint().concat("bridgeEndpoint=true"));
+                .to(getEndpoint().concat("?bridgeEndpoint=true"));
 
     }
 }
