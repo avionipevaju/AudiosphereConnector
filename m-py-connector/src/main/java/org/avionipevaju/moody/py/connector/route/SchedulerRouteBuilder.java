@@ -2,24 +2,26 @@ package org.avionipevaju.moody.py.connector.route;
 
 import org.apache.camel.Exchange;
 
-public class TestRouteBuilder extends AbstractRouteBuilder {
+public class SchedulerRouteBuilder extends AbstractRouteBuilder {
 
     public void configure() throws Exception {
 
         from("timer:twitScheduler?period=12h").id("twitScheduler")
-                .description("Initiates MoodyPy twit posting based on the current weather periodically")
+                .description("MoodyPy tweet scheduler. Initiates periodic content posting on Twitter")
                 .doTry()
                     .process(getRequestProcessor())
                     .setHeader(Exchange.HTTP_METHOD, constant("GET"))
-                    .to("http4://localhost:8887/execute")
+                    .to(getEndpoint())
                     .process(getResponseProcessor())
                 .doCatch(Throwable.class)
                     .process(getExceptionHandlingProcessor());
 
-        rest().get("/scheduler/twit").id("manualTwitScheduler").outType(String.class).produces("application/json")
-                .description("")
+        rest().get("/manual-initiate").id("manualInitiateRoute")
+                .outType(String.class).produces("application/json")
+                .description("Manually post content on Twitter with MoodyPy")
                 .route()
                 .setHeader(Exchange.HTTP_METHOD, constant("GET"))
-                .to("http4://localhost:8887/execute");
+                .to(getEndpoint());
+
     }
 }

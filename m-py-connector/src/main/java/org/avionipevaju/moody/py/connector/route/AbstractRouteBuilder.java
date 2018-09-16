@@ -8,6 +8,7 @@ public abstract class AbstractRouteBuilder extends RouteBuilder {
     private Processor requestProcessor;
     private Processor responseProcessor;
     private Processor exceptionHandlingProcessor;
+    private String endpoint;
 
     public Processor getRequestProcessor() {
         return requestProcessor;
@@ -31,5 +32,13 @@ public abstract class AbstractRouteBuilder extends RouteBuilder {
 
     public void setExceptionHandlingProcessor(Processor exceptionHandlingProcessor) {
         this.exceptionHandlingProcessor = exceptionHandlingProcessor;
+    }
+
+    public String getEndpoint() {
+        return endpoint;
+    }
+
+    public void setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
     }
 }

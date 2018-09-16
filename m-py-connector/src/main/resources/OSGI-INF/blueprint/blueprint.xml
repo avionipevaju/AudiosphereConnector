@@ -10,7 +10,7 @@
     <!-- Configuration File -->
     <cm:property-placeholder persistent-id="configuration" update-strategy="reload">
         <cm:default-properties>
-            <cm:property name="key" value="def-value"/>
+            <cm:property name="moodyPyExecuteEndpoint" value="def-value"/>
         </cm:default-properties>
     </cm:property-placeholder>
 
@@ -38,15 +38,16 @@
     <bean id="exceptionHandlingProcessor" class="org.avionipevaju.moody.py.connector.processor.ExceptionHandlingProcessor"/>
 
     <!-- Route Builders -->
-    <bean id="testRouteBuilder" class="org.avionipevaju.moody.py.connector.route.TestRouteBuilder">
+    <bean id="schedulerRouteBuilder" class="org.avionipevaju.moody.py.connector.route.SchedulerRouteBuilder">
         <property name="requestProcessor" ref="requestProcessor"/>
         <property name="responseProcessor" ref="responseProcessor"/>
         <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
+        <property name="endpoint" value="${moodyPyExecuteEndpoint}"/>
     </bean>
 
     <!-- Camel Context -->
     <camelContext id="m-py-context" xmlns="http://camel.apache.org/schema/blueprint">
-        <routeBuilder ref="testRouteBuilder"/>
+        <routeBuilder ref="schedulerRouteBuilder"/>
 
         <restConfiguration component="netty4-http" bindingMode="auto" contextPath="/m-py/api">
             <endpointProperty key="nettySharedHttpServer" value="#httpServer" />
