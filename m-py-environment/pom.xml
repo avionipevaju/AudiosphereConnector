@@ -12,7 +12,7 @@
 
     <artifactId>m-py-environment</artifactId>
     <version>1.0.0</version>
-    <packaging>feature</packaging>
+    <packaging>pom</packaging>
 
     <name>MoodyPy Connector Environment</name>
 

@@ -11,6 +11,7 @@
     <cm:property-placeholder persistent-id="configuration" update-strategy="reload">
         <cm:default-properties>
             <cm:property name="moodyPyExecuteEndpoint" value="def-value"/>
+            <cm:property name="moodyPyPostContentEndpoint" value="def-value"/>
         </cm:default-properties>
     </cm:property-placeholder>
 
@@ -33,21 +34,26 @@
     <bean id="jacksonObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
 
     <!-- Processors -->
-    <bean id="requestProcessor" class="org.avionipevaju.moody.py.connector.processor.RequestProcessor"/>
-    <bean id="responseProcessor" class="org.avionipevaju.moody.py.connector.processor.ResponseProcessor"/>
-    <bean id="exceptionHandlingProcessor" class="org.avionipevaju.moody.py.connector.processor.ExceptionHandlingProcessor"/>
+    <bean id="contentRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.content.ContentRequestProcessor"/>
+    <bean id="contentResponseProcessor" class="org.avionipevaju.moody.py.connector.processor.content.ContentResponseProcessor"/>
+    <bean id="exceptionHandlingProcessor" class="org.avionipevaju.moody.py.connector.processor.exception.ExceptionHandlingProcessor"/>
 
     <!-- Route Builders -->
     <bean id="schedulerRouteBuilder" class="org.avionipevaju.moody.py.connector.route.SchedulerRouteBuilder">
-        <property name="requestProcessor" ref="requestProcessor"/>
-        <property name="responseProcessor" ref="responseProcessor"/>
         <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
         <property name="endpoint" value="${moodyPyExecuteEndpoint}"/>
+    </bean>
+    <bean id="contentRouteBuilder" class="org.avionipevaju.moody.py.connector.route.ContentRouteBuilder">
+        <property name="requestProcessor" ref="contentRequestProcessor"/>
+        <property name="responseProcessor" ref="contentResponseProcessor"/>
+        <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
+        <property name="endpoint" value="${moodyPyPostContentEndpoint}"/>
     </bean>
 
     <!-- Camel Context -->
     <camelContext id="m-py-context" xmlns="http://camel.apache.org/schema/blueprint">
         <routeBuilder ref="schedulerRouteBuilder"/>
+        <routeBuilder ref="contentRouteBuilder"/>
 
         <restConfiguration component="netty4-http" bindingMode="auto" contextPath="/m-py/api">
             <endpointProperty key="nettySharedHttpServer" value="#httpServer" />

@@ -68,6 +68,11 @@
                 <artifactId>camel-netty4-http</artifactId>
                 <version>${camel.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-test</artifactId>
+                <version>${camel.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -101,6 +106,11 @@
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-netty4-http</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

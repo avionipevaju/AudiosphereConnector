@@ -9,10 +9,8 @@ public class SchedulerRouteBuilder extends AbstractRouteBuilder {
         from("timer:twitScheduler?period=12h").id("twitScheduler")
                 .description("MoodyPy tweet scheduler. Initiates periodic content posting on Twitter")
                 .doTry()
-                    .process(getRequestProcessor())
                     .setHeader(Exchange.HTTP_METHOD, constant("GET"))
                     .to(getEndpoint())
-                    .process(getResponseProcessor())
                 .doCatch(Throwable.class)
                     .process(getExceptionHandlingProcessor());
 
@@ -20,8 +18,11 @@ public class SchedulerRouteBuilder extends AbstractRouteBuilder {
                 .outType(String.class).produces("application/json")
                 .description("Manually post content on Twitter with MoodyPy")
                 .route()
-                .setHeader(Exchange.HTTP_METHOD, constant("GET"))
-                .to(getEndpoint().concat("?bridgeEndpoint=true"));
+                .doTry()
+                    .setHeader(Exchange.HTTP_METHOD, constant("GET"))
+                    .to(getEndpoint().concat("?bridgeEndpoint=true"))
+                .doCatch(Throwable.class)
+                    .process(getExceptionHandlingProcessor());
 
     }
 }

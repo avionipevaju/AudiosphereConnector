@@ -1,4 +1,4 @@
-package org.avionipevaju.moody.py.connector.processor;
+package org.avionipevaju.moody.py.connector.processor.exception;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
