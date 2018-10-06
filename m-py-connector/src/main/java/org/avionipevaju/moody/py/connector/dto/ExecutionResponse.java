@@ -1,11 +1,14 @@
 package org.avionipevaju.moody.py.connector.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ExecutionResponse {
 
     private String content;
 
     private String description;
 
+    @JsonProperty("post_id")
     private String postId;
 
     private String status;
