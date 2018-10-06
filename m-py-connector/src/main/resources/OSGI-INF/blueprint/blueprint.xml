@@ -33,6 +33,9 @@
     <!-- Jackson Object Mapper -->
     <bean id="jacksonObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
 
+    <!-- Jackson Xml Mapper -->
+    <bean id="jacksonXmlMapper" class="com.fasterxml.jackson.dataformat.xml.XmlMapper"/>
+
     <!-- Processors -->
     <bean id="contentRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.content.ContentRequestProcessor"/>
     <bean id="contentResponseProcessor" class="org.avionipevaju.moody.py.connector.processor.content.ContentResponseProcessor"/>

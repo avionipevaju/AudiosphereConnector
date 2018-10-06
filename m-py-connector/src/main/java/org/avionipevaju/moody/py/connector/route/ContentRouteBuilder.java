@@ -17,7 +17,7 @@ public class ContentRouteBuilder extends AbstractRouteBuilder {
                 .route()
                 .doTry()
                     .setHeader(Exchange.HTTP_METHOD, constant("POST"))
-                    //.setHeader("Authorization", constant("Basic andfoaierub123135"))
+                    .setHeader("Authorization", constant("Basic andfoaierub123135"))
                     .process(getRequestProcessor())
                     .marshal().json(JsonLibrary.Jackson)
                     .to(getEndpoint())

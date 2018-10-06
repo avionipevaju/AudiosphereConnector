@@ -1,23 +1,15 @@
 package org.avionipevaju.moody.py.connector.processor.content;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.avionipevaju.moody.py.connector.dto.ExecutionRequest;
-import org.avionipevaju.moody.py.connector.vo.Instruction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.avionipevaju.moody.py.connector.processor.AbstractProcessor;
 
-public class ContentRequestProcessor implements Processor {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ContentRequestProcessor.class);
+public class ContentRequestProcessor extends AbstractProcessor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        ExecutionRequest executionRequest = new ExecutionRequest();
-        executionRequest.setInstruction(Instruction.PROCESS_ARTIST);
-        executionRequest.setContent("Chroma Key");
-        executionRequest.setRequestedBy("avionipevaju");
-        LOGGER.info(executionRequest.toString());
+        ExecutionRequest executionRequest = exchange.getIn().getBody(ExecutionRequest.class);
+        logAsJson(executionRequest);
         exchange.getOut().setBody(executionRequest);
     }
 }

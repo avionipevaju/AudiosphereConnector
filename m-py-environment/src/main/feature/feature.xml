@@ -2,7 +2,6 @@
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.4.0" name="${artifactId}">
     <repository>mvn:org.apache.camel.karaf/apache-camel/${camel.version}/xml/features</repository>
     <repository>mvn:io.hawt/hawtio-karaf/${hawtio.version}/xml/features</repository>
-    <repository>mvn:com.fasterxml.jackson.core/</repository>
     <feature name="${artifactId}" description="${name}" version="${version}">
         <feature>shell</feature>
         <feature>war</feature>
@@ -17,8 +16,13 @@
         <feature>camel-netty4</feature>
         <feature>camel-netty4-http</feature>
         <feature>camel-metrics</feature>
+        <!--<bundle>mvn:com.fasterxml/jackson-xml-databind/0.6.2</bundle>-->
         <bundle>mvn:com.fasterxml.jackson.core/jackson-core/${jackson.version}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/${jackson.version}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/${jackson.version}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/${jackson.version}</bundle>
+        <bundle>mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-xml/${jackson.version}</bundle>
+        <bundle>mvn:com.fasterxml.woodstox/woodstox-core/${woodstox.version}</bundle>
+        <bundle>mvn:org.codehaus.woodstox/stax2-api/3.1.4</bundle>
     </feature>
 </features>
