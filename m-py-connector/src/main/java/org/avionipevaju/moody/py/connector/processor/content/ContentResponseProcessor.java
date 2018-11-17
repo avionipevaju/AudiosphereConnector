@@ -9,6 +9,6 @@ public class ContentResponseProcessor extends AbstractProcessor {
     @Override
     public void process(Exchange exchange) throws Exception {
         ExecutionResponse executionResponse = exchange.getIn().getBody(ExecutionResponse.class);
-        logAsJson(executionResponse);
+        logAsJson(exchange.getIn().getHeaders(), executionResponse);
     }
 }

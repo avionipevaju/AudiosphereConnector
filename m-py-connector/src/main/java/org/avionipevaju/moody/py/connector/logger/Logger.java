@@ -10,6 +10,8 @@ public class Logger {
 
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(Logger.class);
 
+    private static final String LOG_FORMAT = "Headers:\n %s ##### \n Body:\n %s";
+
     private static Logger instance;
 
     private ObjectMapper objectMapper;
@@ -29,19 +31,39 @@ public class Logger {
         return instance;
     }
 
-    public static void logJson(Object object) {
+    public static void logJson(Object body) {
         try {
-            LOGGER.info(getInstance().objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object));
+            LOGGER.info(getInstance().objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(body));
         } catch (JsonProcessingException e) {
-            LOGGER.error("Error logging JSON for object {}", object);
+            LOGGER.error("Error logging JSON for request with body {}", body);
         }
     }
 
-    public static void logXml(Object object) {
+    public static void logJson(Object header, Object body) {
         try {
-            LOGGER.info(getInstance().xmlMapper.writeValueAsString(object));
+            String headerString = getInstance().objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(header);
+            String bodyString = getInstance().objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(body);
+            LOGGER.info(String.format(LOG_FORMAT, headerString, bodyString));
         } catch (JsonProcessingException e) {
-            LOGGER.error("Error logging XML for object {}", object);
+            LOGGER.error("Error logging JSON for request with body {}", body);
+        }
+    }
+
+    public static void logXml(Object body) {
+        try {
+            LOGGER.info(getInstance().xmlMapper.writeValueAsString(body));
+        } catch (JsonProcessingException e) {
+            LOGGER.error("Error logging XML for request with body {}", body);
+        }
+    }
+
+    public static void logXml(Object header, Object body) {
+        try {
+            String headerString = getInstance().xmlMapper.writeValueAsString(header);
+            String bodyString = getInstance().xmlMapper.writeValueAsString(body);
+            LOGGER.info(String.format(LOG_FORMAT, headerString, bodyString));
+        } catch (JsonProcessingException e) {
+            LOGGER.error("Error logging XML for request with body {}", body);
         }
     }
 
