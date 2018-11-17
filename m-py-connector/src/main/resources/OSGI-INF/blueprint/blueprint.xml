@@ -40,7 +40,9 @@
     <bean id="contentRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.content.ContentRequestProcessor"/>
     <bean id="contentResponseProcessor" class="org.avionipevaju.moody.py.connector.processor.content.ContentResponseProcessor"/>
     <bean id="exceptionHandlingProcessor" class="org.avionipevaju.moody.py.connector.processor.exception.ExceptionHandlingProcessor"/>
-    <bean id="httpOperationFailedExceptionProcessor" class="org.avionipevaju.moody.py.connector.processor.exception.HttpOperationFailedExceptionProcessor"/>
+    <bean id="httpOperationFailedExceptionProcessor" class="org.avionipevaju.moody.py.connector.processor.exception.HttpOperationFailedExceptionProcessor">
+        <property name="objectMapper" ref="jacksonObjectMapper"/>
+    </bean>
 
     <!-- Route Builders -->
     <bean id="schedulerRouteBuilder" class="org.avionipevaju.moody.py.connector.route.scheduler.SchedulerRouteBuilder">
