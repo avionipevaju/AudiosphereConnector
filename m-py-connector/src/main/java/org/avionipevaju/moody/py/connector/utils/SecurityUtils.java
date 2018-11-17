@@ -27,7 +27,7 @@ public class SecurityUtils {
             return null;
         }
         String toEncode = username.concat(":").concat(password);
-        return Base64.getEncoder().encode(toEncode.getBytes()).toString();
+        return new String(Base64.getEncoder().encode(toEncode.getBytes()));
     }
 
     public static void addAuthenticationHeader(Exchange exchange, String passkey) {
