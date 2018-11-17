@@ -8,6 +8,7 @@ public abstract class AbstractRouteBuilder extends RouteBuilder {
     private Processor requestProcessor;
     private Processor responseProcessor;
     private Processor exceptionHandlingProcessor;
+    private Processor httpOperationFailedExceptionProcessor;
     private String endpoint;
 
     public Processor getRequestProcessor() {
@@ -40,5 +41,13 @@ public abstract class AbstractRouteBuilder extends RouteBuilder {
 
     public void setEndpoint(String endpoint) {
         this.endpoint = endpoint;
+    }
+
+    public Processor getHttpOperationFailedExceptionProcessor() {
+        return httpOperationFailedExceptionProcessor;
+    }
+
+    public void setHttpOperationFailedExceptionProcessor(Processor httpOperationFailedExceptionProcessor) {
+        this.httpOperationFailedExceptionProcessor = httpOperationFailedExceptionProcessor;
     }
 }

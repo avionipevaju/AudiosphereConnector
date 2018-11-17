@@ -1,9 +1,11 @@
-package org.avionipevaju.moody.py.connector.route;
+package org.avionipevaju.moody.py.connector.route.content;
 
 import org.apache.camel.Exchange;
+import org.apache.camel.http.common.HttpOperationFailedException;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.avionipevaju.moody.py.connector.dto.ExecutionRequest;
 import org.avionipevaju.moody.py.connector.dto.ExecutionResponse;
+import org.avionipevaju.moody.py.connector.route.AbstractRouteBuilder;
 
 public class ContentRouteBuilder extends AbstractRouteBuilder {
 
@@ -22,6 +24,8 @@ public class ContentRouteBuilder extends AbstractRouteBuilder {
                     .to(getEndpoint())
                     .unmarshal().json(JsonLibrary.Jackson, ExecutionResponse.class)
                     .process(getResponseProcessor())
+                .doCatch(HttpOperationFailedException.class)
+                    .process(getHttpOperationFailedExceptionProcessor())
                 .doCatch(Throwable.class)
                     .process(getExceptionHandlingProcessor());
 

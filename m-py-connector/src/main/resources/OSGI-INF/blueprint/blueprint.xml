@@ -40,16 +40,19 @@
     <bean id="contentRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.content.ContentRequestProcessor"/>
     <bean id="contentResponseProcessor" class="org.avionipevaju.moody.py.connector.processor.content.ContentResponseProcessor"/>
     <bean id="exceptionHandlingProcessor" class="org.avionipevaju.moody.py.connector.processor.exception.ExceptionHandlingProcessor"/>
+    <bean id="httpOperationFailedExceptionProcessor" class="org.avionipevaju.moody.py.connector.processor.exception.HttpOperationFailedExceptionProcessor"/>
 
     <!-- Route Builders -->
-    <bean id="schedulerRouteBuilder" class="org.avionipevaju.moody.py.connector.route.SchedulerRouteBuilder">
+    <bean id="schedulerRouteBuilder" class="org.avionipevaju.moody.py.connector.route.scheduler.SchedulerRouteBuilder">
         <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
+        <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
         <property name="endpoint" value="${moodyPyExecuteEndpoint}"/>
     </bean>
-    <bean id="contentRouteBuilder" class="org.avionipevaju.moody.py.connector.route.ContentRouteBuilder">
+    <bean id="contentRouteBuilder" class="org.avionipevaju.moody.py.connector.route.content.ContentRouteBuilder">
         <property name="requestProcessor" ref="contentRequestProcessor"/>
         <property name="responseProcessor" ref="contentResponseProcessor"/>
         <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
+        <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
         <property name="endpoint" value="${moodyPyPostContentEndpoint}"/>
     </bean>
 

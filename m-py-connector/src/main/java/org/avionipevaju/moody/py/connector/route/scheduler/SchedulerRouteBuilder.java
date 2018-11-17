@@ -1,6 +1,8 @@
-package org.avionipevaju.moody.py.connector.route;
+package org.avionipevaju.moody.py.connector.route.scheduler;
 
 import org.apache.camel.Exchange;
+import org.apache.camel.http.common.HttpOperationFailedException;
+import org.avionipevaju.moody.py.connector.route.AbstractRouteBuilder;
 
 public class SchedulerRouteBuilder extends AbstractRouteBuilder {
 
@@ -11,6 +13,8 @@ public class SchedulerRouteBuilder extends AbstractRouteBuilder {
                 .doTry()
                     .setHeader(Exchange.HTTP_METHOD, constant("GET"))
                     .to(getEndpoint())
+                .doCatch(HttpOperationFailedException.class)
+                    .process(getHttpOperationFailedExceptionProcessor())
                 .doCatch(Throwable.class)
                     .process(getExceptionHandlingProcessor());
 
@@ -21,6 +25,8 @@ public class SchedulerRouteBuilder extends AbstractRouteBuilder {
                 .doTry()
                     .setHeader(Exchange.HTTP_METHOD, constant("GET"))
                     .to(getEndpoint().concat("?bridgeEndpoint=true"))
+                .doCatch(HttpOperationFailedException.class)
+                    .process(getHttpOperationFailedExceptionProcessor())
                 .doCatch(Throwable.class)
                     .process(getExceptionHandlingProcessor());
 
