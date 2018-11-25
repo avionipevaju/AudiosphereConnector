@@ -1,15 +1,15 @@
-package org.avionipevaju.moody.py.connector.route.scheduler;
+package org.avionipevaju.moody.py.connector.route.scheduler.twitter;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.http.common.HttpOperationFailedException;
 import org.avionipevaju.moody.py.connector.route.AbstractRouteBuilder;
 
-public class SchedulerRouteBuilder extends AbstractRouteBuilder {
+public class TwitterSchedulerRouteBuilder extends AbstractRouteBuilder {
 
     public void configure() throws Exception {
 
-        from("timer:twitScheduler?period=12h").id("twitScheduler")
-                .description("MoodyPy tweet scheduler. Initiates periodic content posting on Twitter")
+        from("timer:twitScheduler?period=12h").id("twitterScheduler")
+                .description("MoodyPy tweet scheduler. Initiates periodic content posting to Twitter based on the weather")
                 .doTry()
                     .setHeader(Exchange.HTTP_METHOD, constant("GET"))
                     .to(getEndpoint())
@@ -18,9 +18,9 @@ public class SchedulerRouteBuilder extends AbstractRouteBuilder {
                 .doCatch(Throwable.class)
                     .process(getExceptionHandlingProcessor());
 
-        rest().get("/manual-initiate").id("manualInitiateRoute")
+        rest().get("/twitter/manual-initiate").id("twitterManualInitiateRoute")
                 .outType(String.class).produces("application/json")
-                .description("Manually post content on Twitter with MoodyPy")
+                .description("Manually post content based on weather data to Twitter with MoodyPy")
                 .route()
                 .doTry()
                     .setHeader(Exchange.HTTP_METHOD, constant("GET"))

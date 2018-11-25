@@ -10,9 +10,9 @@ public class SecurityUtils {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(SecurityUtils.class);
 
-    private static final String USERNAME_HEADER = "m-py-username";
+    public static final String USERNAME_HEADER = "m-py-username";
 
-    private static final String PASSWORD_HEADER = "m-py-password";
+    public static final String PASSWORD_HEADER = "m-py-password";
 
     private static final String AUTHENTICATION_HEADER = "Authorization";
 

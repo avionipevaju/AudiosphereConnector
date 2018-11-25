@@ -2,7 +2,7 @@ package org.avionipevaju.moody.py.connector.processor.exception;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.avionipevaju.moody.py.connector.dto.ExecutionResponse;
+import org.avionipevaju.moody.py.connector.dto.twitter.ExecutionResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

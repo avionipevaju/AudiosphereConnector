@@ -3,7 +3,7 @@ package org.avionipevaju.moody.py.connector.processor.exception;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.camel.Exchange;
 import org.apache.camel.http.common.HttpOperationFailedException;
-import org.avionipevaju.moody.py.connector.dto.ExecutionResponse;
+import org.avionipevaju.moody.py.connector.dto.twitter.ExecutionResponse;
 import org.avionipevaju.moody.py.connector.processor.AbstractProcessor;
 
 public class HttpOperationFailedExceptionProcessor extends AbstractProcessor {

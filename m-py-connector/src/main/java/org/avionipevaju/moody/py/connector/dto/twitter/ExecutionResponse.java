@@ -1,4 +1,4 @@
-package org.avionipevaju.moody.py.connector.dto;
+package org.avionipevaju.moody.py.connector.dto.twitter;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

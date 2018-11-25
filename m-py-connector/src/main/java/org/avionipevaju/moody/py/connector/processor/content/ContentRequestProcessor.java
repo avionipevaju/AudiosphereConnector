@@ -1,7 +1,7 @@
 package org.avionipevaju.moody.py.connector.processor.content;
 
 import org.apache.camel.Exchange;
-import org.avionipevaju.moody.py.connector.dto.ExecutionRequest;
+import org.avionipevaju.moody.py.connector.dto.twitter.ExecutionRequest;
 import org.avionipevaju.moody.py.connector.processor.AbstractProcessor;
 import org.avionipevaju.moody.py.connector.utils.SecurityUtils;
 

@@ -12,6 +12,7 @@
         <cm:default-properties>
             <cm:property name="moodyPyExecuteEndpoint" value="def-value"/>
             <cm:property name="moodyPyPostContentEndpoint" value="def-value"/>
+            <cm:property name="instaFeedGetPostEndpoint" value="def=value"/>
         </cm:default-properties>
     </cm:property-placeholder>
 
@@ -43,12 +44,22 @@
     <bean id="httpOperationFailedExceptionProcessor" class="org.avionipevaju.moody.py.connector.processor.exception.HttpOperationFailedExceptionProcessor">
         <property name="objectMapper" ref="jacksonObjectMapper"/>
     </bean>
+    <bean id="instagramSchedulerPreProcessor" class="org.avionipevaju.moody.py.connector.processor.scheduler.instagram.InstagramSchedulerPreProcessor">
+        <property name="endpoint" value="${instaFeedGetPostEndpoint}"/>
+    </bean>
+    <bean id="instagramSchedulerRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.scheduler.instagram.InstagramSchedulerRequestProcessor"/>
 
     <!-- Route Builders -->
-    <bean id="schedulerRouteBuilder" class="org.avionipevaju.moody.py.connector.route.scheduler.SchedulerRouteBuilder">
+    <bean id="twitterSchedulerRouteBuilder" class="org.avionipevaju.moody.py.connector.route.scheduler.twitter.TwitterSchedulerRouteBuilder">
         <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
         <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
         <property name="endpoint" value="${moodyPyExecuteEndpoint}"/>
+    </bean>
+    <bean id="instagramSchedulerRouteBuilder" class="org.avionipevaju.moody.py.connector.route.scheduler.instagram.InstagramSchedulerRouteBuilder">
+        <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
+        <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
+        <property name="instagramSchedulerPreProcessor" ref="instagramSchedulerPreProcessor"/>
+        <property name="requestProcessor" ref="instagramSchedulerRequestProcessor"/>
     </bean>
     <bean id="contentRouteBuilder" class="org.avionipevaju.moody.py.connector.route.content.ContentRouteBuilder">
         <property name="requestProcessor" ref="contentRequestProcessor"/>
@@ -60,7 +71,8 @@
 
     <!-- Camel Context -->
     <camelContext id="m-py-context" xmlns="http://camel.apache.org/schema/blueprint">
-        <routeBuilder ref="schedulerRouteBuilder"/>
+        <routeBuilder ref="twitterSchedulerRouteBuilder"/>
+        <routeBuilder ref="instagramSchedulerRouteBuilder"/>
         <routeBuilder ref="contentRouteBuilder"/>
 
         <restConfiguration component="netty4-http" bindingMode="auto" contextPath="/m-py/api">

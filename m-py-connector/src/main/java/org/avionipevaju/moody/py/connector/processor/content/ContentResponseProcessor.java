@@ -1,7 +1,7 @@
 package org.avionipevaju.moody.py.connector.processor.content;
 
 import org.apache.camel.Exchange;
-import org.avionipevaju.moody.py.connector.dto.ExecutionResponse;
+import org.avionipevaju.moody.py.connector.dto.twitter.ExecutionResponse;
 import org.avionipevaju.moody.py.connector.processor.AbstractProcessor;
 
 public class ContentResponseProcessor extends AbstractProcessor {
