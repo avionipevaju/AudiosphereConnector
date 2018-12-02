@@ -36,6 +36,8 @@
         <hawtio.version>2.0.3</hawtio.version>
         <jackson.version>2.9.6</jackson.version>
         <woodstox.version>5.0.3</woodstox.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <dependencyManagement>
