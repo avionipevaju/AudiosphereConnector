@@ -115,12 +115,19 @@
             <artifactId>camel-netty4-http</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <!--Test-->
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-test</artifactId>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.25</version>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>

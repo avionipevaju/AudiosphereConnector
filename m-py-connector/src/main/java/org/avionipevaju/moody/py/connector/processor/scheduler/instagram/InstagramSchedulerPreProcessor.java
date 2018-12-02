@@ -2,7 +2,6 @@ package org.avionipevaju.moody.py.connector.processor.scheduler.instagram;
 
 import org.apache.camel.Exchange;
 import org.avionipevaju.moody.py.connector.processor.AbstractProcessor;
-import org.avionipevaju.moody.py.connector.utils.SecurityUtils;
 import org.avionipevaju.moody.py.connector.vo.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +15,8 @@ public class InstagramSchedulerPreProcessor extends AbstractProcessor {
     @Override
     public void process(Exchange exchange) throws Exception {
         String username = exchange.getIn().getHeader("username", String.class);
-        exchange.setProperty(SecurityUtils.USERNAME_HEADER, exchange.getIn().getHeader(SecurityUtils.USERNAME_HEADER));
-        exchange.setProperty(SecurityUtils.PASSWORD_HEADER, exchange.getIn().getHeader(SecurityUtils.PASSWORD_HEADER));
+        exchange.setProperty(Constants.USERNAME_HEADER, exchange.getIn().getHeader(Constants.USERNAME_HEADER));
+        exchange.setProperty(Constants.PASSWORD_HEADER, exchange.getIn().getHeader(Constants.PASSWORD_HEADER));
         String formattedEndpoint = String.format(getEndpoint().concat("?bridgeEndpoint=true"), username);
         exchange.setProperty(Constants.INSTAGRAM_SCHEDULER_URL, formattedEndpoint);
         LOGGER.info("GET ".concat(formattedEndpoint));
