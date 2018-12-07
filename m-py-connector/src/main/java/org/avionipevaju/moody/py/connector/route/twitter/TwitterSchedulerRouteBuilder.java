@@ -1,4 +1,4 @@
-package org.avionipevaju.moody.py.connector.route.scheduler.twitter;
+package org.avionipevaju.moody.py.connector.route.twitter;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.http.common.HttpOperationFailedException;

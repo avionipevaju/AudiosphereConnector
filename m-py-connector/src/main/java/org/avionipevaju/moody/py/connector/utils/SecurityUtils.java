@@ -7,8 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Base64;
 
-import static org.avionipevaju.moody.py.connector.vo.Constants.PASSWORD_HEADER;
-
 public class SecurityUtils {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(SecurityUtils.class);

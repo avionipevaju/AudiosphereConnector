@@ -1,4 +1,4 @@
-package org.avionipevaju.moody.py.connector.route.content;
+package org.avionipevaju.moody.py.connector.route.twitter;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.http.common.HttpOperationFailedException;
@@ -7,7 +7,7 @@ import org.avionipevaju.moody.py.connector.dto.twitter.ExecutionRequest;
 import org.avionipevaju.moody.py.connector.dto.twitter.ExecutionResponse;
 import org.avionipevaju.moody.py.connector.route.AbstractRouteBuilder;
 
-public class ContentRouteBuilder extends AbstractRouteBuilder {
+public class TwitterRouteBuilder extends AbstractRouteBuilder {
 
     @Override
     public void configure() throws Exception {

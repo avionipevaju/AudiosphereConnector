@@ -1,4 +1,4 @@
-package org.avionipevaju.moody.py.connector.processor.scheduler.instagram;
+package org.avionipevaju.moody.py.connector.processor.instagram;
 
 import org.apache.camel.Exchange;
 import org.avionipevaju.moody.py.connector.dto.instagram.ExecutionResponse;

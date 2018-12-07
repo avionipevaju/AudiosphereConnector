@@ -38,32 +38,32 @@
     <bean id="jacksonXmlMapper" class="com.fasterxml.jackson.dataformat.xml.XmlMapper"/>
 
     <!-- Processors -->
-    <bean id="contentRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.content.ContentRequestProcessor"/>
-    <bean id="contentResponseProcessor" class="org.avionipevaju.moody.py.connector.processor.content.ContentResponseProcessor"/>
+    <bean id="twitterRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.twitter.TwitterRequestProcessor"/>
+    <bean id="twitterResponseProcessor" class="org.avionipevaju.moody.py.connector.processor.twitter.TwitterResponseProcessor"/>
     <bean id="exceptionHandlingProcessor" class="org.avionipevaju.moody.py.connector.processor.exception.ExceptionHandlingProcessor"/>
     <bean id="httpOperationFailedExceptionProcessor" class="org.avionipevaju.moody.py.connector.processor.exception.HttpOperationFailedExceptionProcessor">
         <property name="objectMapper" ref="jacksonObjectMapper"/>
     </bean>
-    <bean id="instagramSchedulerPreProcessor" class="org.avionipevaju.moody.py.connector.processor.scheduler.instagram.InstagramSchedulerPreProcessor">
+    <bean id="instagramSchedulerPreProcessor" class="org.avionipevaju.moody.py.connector.processor.instagram.InstagramSchedulerPreProcessor">
         <property name="endpoint" value="${instaFeedGetPostEndpoint}"/>
     </bean>
-    <bean id="instagramSchedulerRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.scheduler.instagram.InstagramSchedulerRequestProcessor"/>
+    <bean id="instagramSchedulerRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.instagram.InstagramSchedulerRequestProcessor"/>
 
     <!-- Route Builders -->
-    <bean id="twitterSchedulerRouteBuilder" class="org.avionipevaju.moody.py.connector.route.scheduler.twitter.TwitterSchedulerRouteBuilder">
+    <bean id="twitterSchedulerRouteBuilder" class="org.avionipevaju.moody.py.connector.route.twitter.TwitterSchedulerRouteBuilder">
         <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
         <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
         <property name="endpoint" value="${moodyPyExecuteEndpoint}"/>
     </bean>
-    <bean id="instagramSchedulerRouteBuilder" class="org.avionipevaju.moody.py.connector.route.scheduler.instagram.InstagramSchedulerRouteBuilder">
+    <bean id="instagramSchedulerRouteBuilder" class="org.avionipevaju.moody.py.connector.route.instagram.InstagramSchedulerRouteBuilder">
         <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
         <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
         <property name="instagramSchedulerPreProcessor" ref="instagramSchedulerPreProcessor"/>
         <property name="requestProcessor" ref="instagramSchedulerRequestProcessor"/>
     </bean>
-    <bean id="contentRouteBuilder" class="org.avionipevaju.moody.py.connector.route.content.ContentRouteBuilder">
-        <property name="requestProcessor" ref="contentRequestProcessor"/>
-        <property name="responseProcessor" ref="contentResponseProcessor"/>
+    <bean id="twitterRouteBuilder" class="org.avionipevaju.moody.py.connector.route.twitter.TwitterRouteBuilder">
+        <property name="requestProcessor" ref="twitterRequestProcessor"/>
+        <property name="responseProcessor" ref="twitterResponseProcessor"/>
         <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
         <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
         <property name="endpoint" value="${moodyPyPostContentEndpoint}"/>
@@ -73,7 +73,7 @@
     <camelContext id="m-py-context" xmlns="http://camel.apache.org/schema/blueprint">
         <routeBuilder ref="twitterSchedulerRouteBuilder"/>
         <routeBuilder ref="instagramSchedulerRouteBuilder"/>
-        <routeBuilder ref="contentRouteBuilder"/>
+        <routeBuilder ref="twitterRouteBuilder"/>
 
         <restConfiguration component="netty4-http" bindingMode="auto" contextPath="/m-py/api">
             <endpointProperty key="nettySharedHttpServer" value="#httpServer" />
