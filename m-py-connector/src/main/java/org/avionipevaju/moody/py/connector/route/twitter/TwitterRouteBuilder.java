@@ -3,8 +3,8 @@ package org.avionipevaju.moody.py.connector.route.twitter;
 import org.apache.camel.Exchange;
 import org.apache.camel.http.common.HttpOperationFailedException;
 import org.apache.camel.model.dataformat.JsonLibrary;
-import org.avionipevaju.moody.py.connector.dto.twitter.ExecutionRequest;
-import org.avionipevaju.moody.py.connector.dto.twitter.ExecutionResponse;
+import org.avionipevaju.moody.py.connector.dto.twitter.TwitterRequest;
+import org.avionipevaju.moody.py.connector.dto.twitter.TwitterResponse;
 import org.avionipevaju.moody.py.connector.route.AbstractRouteBuilder;
 
 public class TwitterRouteBuilder extends AbstractRouteBuilder {
@@ -13,8 +13,8 @@ public class TwitterRouteBuilder extends AbstractRouteBuilder {
     public void configure() throws Exception {
 
         rest().post("content/post").id("postContentRoute")
-                .type(ExecutionRequest.class).consumes("application/json")
-                .outType(ExecutionResponse.class).produces("application/json")
+                .type(TwitterRequest.class).consumes("application/json")
+                .outType(TwitterResponse.class).produces("application/json")
                 .description("")
                 .route()
                 .doTry()
@@ -22,7 +22,7 @@ public class TwitterRouteBuilder extends AbstractRouteBuilder {
                     .process(getRequestProcessor())
                     .marshal().json(JsonLibrary.Jackson)
                     .to(getEndpoint())
-                    .unmarshal().json(JsonLibrary.Jackson, ExecutionResponse.class)
+                    .unmarshal().json(JsonLibrary.Jackson, TwitterResponse.class)
                     .process(getResponseProcessor())
                 .doCatch(HttpOperationFailedException.class)
                     .process(getHttpOperationFailedExceptionProcessor())
@@ -35,7 +35,7 @@ public class TwitterRouteBuilder extends AbstractRouteBuilder {
                     .process(getRequestProcessor())
                     .marshal().json(JsonLibrary.Jackson)
                     .to(getEndpoint())
-                    .unmarshal().json(JsonLibrary.Jackson, ExecutionResponse.class)
+                    .unmarshal().json(JsonLibrary.Jackson, TwitterResponse.class)
                     .process(getResponseProcessor())
                 .doCatch(HttpOperationFailedException.class)
                     .process(getHttpOperationFailedExceptionProcessor())

@@ -2,7 +2,7 @@ package org.avionipevaju.moody.py.connector.processor.exception;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.avionipevaju.moody.py.connector.dto.twitter.ExecutionResponse;
+import org.avionipevaju.moody.py.connector.dto.twitter.TwitterResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,9 +14,9 @@ public class ExceptionHandlingProcessor implements Processor {
     public void process(Exchange exchange) throws Exception {
         Exception exception = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
         LOGGER.error("{} Body: {} and Headers: {}", exception.getMessage(), exchange.getIn().getBody(), exchange.getIn().getHeaders(), exception);
-        ExecutionResponse executionResponse = new ExecutionResponse();
-        executionResponse.setStatus("-1");
-        executionResponse.setDescription(exception.getMessage());
-        exchange.getOut().setBody(executionResponse);
+        TwitterResponse twitterResponse = new TwitterResponse();
+        twitterResponse.setStatus("-1");
+        twitterResponse.setDescription(exception.getMessage());
+        exchange.getOut().setBody(twitterResponse);
     }
 }

@@ -13,6 +13,7 @@
             <cm:property name="moodyPyExecuteEndpoint" value="def-value"/>
             <cm:property name="moodyPyPostContentEndpoint" value="def-value"/>
             <cm:property name="instaFeedGetPostEndpoint" value="def=value"/>
+            <cm:property name="youtubeEndpoint" value="def=value"/>
         </cm:default-properties>
     </cm:property-placeholder>
 
@@ -40,6 +41,8 @@
     <!-- Processors -->
     <bean id="twitterRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.twitter.TwitterRequestProcessor"/>
     <bean id="twitterResponseProcessor" class="org.avionipevaju.moody.py.connector.processor.twitter.TwitterResponseProcessor"/>
+    <bean id="youtubeRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.youtube.YoutubeRequestProcessor"/>
+    <bean id="youtubeResponseProcessor" class="org.avionipevaju.moody.py.connector.processor.youtube.YoutubeResponseProcessor"/>
     <bean id="exceptionHandlingProcessor" class="org.avionipevaju.moody.py.connector.processor.exception.ExceptionHandlingProcessor"/>
     <bean id="httpOperationFailedExceptionProcessor" class="org.avionipevaju.moody.py.connector.processor.exception.HttpOperationFailedExceptionProcessor">
         <property name="objectMapper" ref="jacksonObjectMapper"/>
@@ -68,12 +71,17 @@
         <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
         <property name="endpoint" value="${moodyPyPostContentEndpoint}"/>
     </bean>
+    <bean id="youtubeRouteBuilder" class="org.avionipevaju.moody.py.connector.route.youtube.YoutubeRouteBuilder">
+        <property name="requestProcessor" ref="youtubeRequestProcessor"/>
+        <property name="responseProcessor" ref="youtubeResponseProcessor"/>
+        <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
+        <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
+        <property name="endpoint" value="${youtubeEndpoint}"/>
+    </bean>
 
     <!-- Camel Context -->
     <camelContext id="m-py-context" xmlns="http://camel.apache.org/schema/blueprint">
-        <routeBuilder ref="twitterSchedulerRouteBuilder"/>
-        <routeBuilder ref="instagramSchedulerRouteBuilder"/>
-        <routeBuilder ref="twitterRouteBuilder"/>
+        <routeBuilder ref="youtubeRouteBuilder"/>
 
         <restConfiguration component="netty4-http" bindingMode="auto" contextPath="/m-py/api">
             <endpointProperty key="nettySharedHttpServer" value="#httpServer" />

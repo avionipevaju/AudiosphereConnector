@@ -1,24 +1,12 @@
 package org.avionipevaju.moody.py.connector.dto.twitter;
 
-import org.avionipevaju.moody.py.connector.vo.Instruction;
-
-public class ExecutionRequest {
-
-    private Instruction instruction;
+public class TwitterRequest {
 
     private String content;
 
     private String requestedBy;
 
-    public ExecutionRequest() {
-    }
-
-    public Instruction getInstruction() {
-        return instruction;
-    }
-
-    public void setInstruction(Instruction instruction) {
-        this.instruction = instruction;
+    public TwitterRequest() {
     }
 
     public String getContent() {

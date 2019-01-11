@@ -3,7 +3,7 @@ package org.avionipevaju.moody.py.connector.processor.exception;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.camel.Exchange;
 import org.apache.camel.http.common.HttpOperationFailedException;
-import org.avionipevaju.moody.py.connector.dto.twitter.ExecutionResponse;
+import org.avionipevaju.moody.py.connector.dto.twitter.TwitterResponse;
 import org.avionipevaju.moody.py.connector.processor.AbstractProcessor;
 
 public class HttpOperationFailedExceptionProcessor extends AbstractProcessor {
@@ -13,9 +13,9 @@ public class HttpOperationFailedExceptionProcessor extends AbstractProcessor {
     @Override
     public void process(Exchange exchange) throws Exception {
         HttpOperationFailedException exception = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, HttpOperationFailedException.class);
-        ExecutionResponse executionResponse = getObjectMapper().readValue(exception.getResponseBody(), ExecutionResponse.class);
-        logAsJson(exchange.getIn().getHeaders(), executionResponse);
-        exchange.getOut().setBody(executionResponse);
+        TwitterResponse twitterResponse = getObjectMapper().readValue(exception.getResponseBody(), TwitterResponse.class);
+        logAsJson(exchange.getIn().getHeaders(), twitterResponse);
+        exchange.getOut().setBody(twitterResponse);
     }
 
     public ObjectMapper getObjectMapper() {

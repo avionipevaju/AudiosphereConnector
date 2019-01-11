@@ -2,7 +2,7 @@ package org.avionipevaju.moody.py.connector.dto.twitter;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ExecutionResponse {
+public class TwitterResponse {
 
     private String content;
 
@@ -15,7 +15,7 @@ public class ExecutionResponse {
 
     private String timestamp;
 
-    public ExecutionResponse() {
+    public TwitterResponse() {
     }
 
     public String getContent() {
