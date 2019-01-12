@@ -11,8 +11,8 @@
     <cm:property-placeholder persistent-id="configuration" update-strategy="reload">
         <cm:default-properties>
             <cm:property name="moodyPyExecuteEndpoint" value="def-value"/>
-            <cm:property name="moodyPyPostContentEndpoint" value="def-value"/>
             <cm:property name="instaFeedGetPostEndpoint" value="def=value"/>
+            <cm:property name="moodyTwitterEndpoint" value="def-value"/>
             <cm:property name="youtubeEndpoint" value="def=value"/>
             <cm:property name="yahooWeatherEndpoint" value="def=value"/>
             <cm:property name="discogsSearchByArtistEndpoint" value="default-value"/>
@@ -65,23 +65,21 @@
     </bean>
 
     <!-- Route Builders -->
-    <bean id="twitterSchedulerRouteBuilder" class="org.avionipevaju.moody.py.connector.route.twitter.TwitterSchedulerRouteBuilder">
-        <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
-        <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
-        <property name="endpoint" value="${moodyPyExecuteEndpoint}"/>
-    </bean>
     <bean id="instagramSchedulerRouteBuilder" class="org.avionipevaju.moody.py.connector.route.instagram.InstagramSchedulerRouteBuilder">
         <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
         <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
         <property name="instagramSchedulerPreProcessor" ref="instagramSchedulerPreProcessor"/>
         <property name="requestProcessor" ref="instagramSchedulerRequestProcessor"/>
     </bean>
+
     <bean id="twitterRouteBuilder" class="org.avionipevaju.moody.py.connector.route.twitter.TwitterRouteBuilder">
+        <argument value="/twitter"/>
+        <argument value="direct:Twitter"/>
         <property name="requestProcessor" ref="twitterRequestProcessor"/>
         <property name="responseProcessor" ref="twitterResponseProcessor"/>
         <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
         <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
-        <property name="endpoint" value="${moodyPyPostContentEndpoint}"/>
+        <property name="endpoint" value="${moodyTwitterEndpoint}"/>
     </bean>
 
     <bean id="youtubeRouteBuilder" class="org.avionipevaju.moody.py.connector.route.youtube.YoutubeRouteBuilder">
@@ -126,6 +124,7 @@
 
     <!-- Camel Context -->
     <camelContext id="m-py-context" xmlns="http://camel.apache.org/schema/blueprint">
+        <routeBuilder ref="twitterRouteBuilder"/>
         <routeBuilder ref="youtubeRouteBuilder"/>
         <routeBuilder ref="yahooWeatherRouteBuilder"/>
         <routeBuilder ref="discogsArtistSearchRouteBuilder"/>
