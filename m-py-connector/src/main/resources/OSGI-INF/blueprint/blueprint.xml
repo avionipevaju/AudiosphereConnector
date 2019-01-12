@@ -132,6 +132,8 @@
         <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
     </bean>
 
+    <bean id="entryPointRouteBuilder" class="org.avionipevaju.moody.py.connector.route.entry.EntryPointRouteBuilder"/>
+
     <!-- Camel Context -->
     <camelContext id="m-py-context" xmlns="http://camel.apache.org/schema/blueprint">
         <routeBuilder ref="twitterRouteBuilder"/>
@@ -141,6 +143,7 @@
         <routeBuilder ref="discogsArtistSearchRouteBuilder"/>
         <routeBuilder ref="discogsGenreSearchRouteBuilder"/>
         <routeBuilder ref="instagramRouteBuilder"/>
+        <routeBuilder ref="entryPointRouteBuilder"/>
 
         <restConfiguration component="netty4-http" bindingMode="auto" contextPath="/m-py/api">
             <endpointProperty key="nettySharedHttpServer" value="#httpServer" />
