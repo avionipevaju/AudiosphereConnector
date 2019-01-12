@@ -11,12 +11,12 @@
     <cm:property-placeholder persistent-id="configuration" update-strategy="reload">
         <cm:default-properties>
             <cm:property name="moodyPyExecuteEndpoint" value="def-value"/>
-            <cm:property name="instaFeedGetPostEndpoint" value="def=value"/>
             <cm:property name="moodyTwitterEndpoint" value="def-value"/>
             <cm:property name="youtubeEndpoint" value="def=value"/>
             <cm:property name="yahooWeatherEndpoint" value="def=value"/>
             <cm:property name="discogsSearchByArtistEndpoint" value="default-value"/>
             <cm:property name="discogsSearchByGenreEndpoint" value="default-value"/>
+            <cm:property name="instaFeedEndpoint" value="def=value"/>
         </cm:default-properties>
     </cm:property-placeholder>
 
@@ -54,10 +54,10 @@
     <bean id="discogsRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.discogs.DiscogsRequestProcessor"/>
     <bean id="discogsResponseProcessor" class="org.avionipevaju.moody.py.connector.processor.discogs.DiscogsResponseProcessor"/>
 
-    <bean id="instagramSchedulerPreProcessor" class="org.avionipevaju.moody.py.connector.processor.instagram.InstagramSchedulerPreProcessor">
-        <property name="endpoint" value="${instaFeedGetPostEndpoint}"/>
+    <bean id="instagramRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.instagram.InstagramRequestProcessor">
+        <property name="endpoint" value="${instaFeedEndpoint}"/>
     </bean>
-    <bean id="instagramSchedulerRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.instagram.InstagramSchedulerRequestProcessor"/>
+    <bean id="instagramResponseProcessor" class="org.avionipevaju.moody.py.connector.processor.instagram.InstagramResponseProcessor"/>
 
     <bean id="exceptionHandlingProcessor" class="org.avionipevaju.moody.py.connector.processor.exception.ExceptionHandlingProcessor"/>
     <bean id="httpOperationFailedExceptionProcessor" class="org.avionipevaju.moody.py.connector.processor.exception.HttpOperationFailedExceptionProcessor">
@@ -65,13 +65,6 @@
     </bean>
 
     <!-- Route Builders -->
-    <bean id="instagramSchedulerRouteBuilder" class="org.avionipevaju.moody.py.connector.route.instagram.InstagramSchedulerRouteBuilder">
-        <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
-        <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
-        <property name="instagramSchedulerPreProcessor" ref="instagramSchedulerPreProcessor"/>
-        <property name="requestProcessor" ref="instagramSchedulerRequestProcessor"/>
-    </bean>
-
     <bean id="twitterRouteBuilder" class="org.avionipevaju.moody.py.connector.route.twitter.TwitterRouteBuilder">
         <argument value="/twitter"/>
         <argument value="direct:Twitter"/>
@@ -122,6 +115,13 @@
         <property name="endpoint" value="${discogsSearchByGenreEndpoint}"/>
     </bean>
 
+    <bean id="instagramRouteBuilder" class="org.avionipevaju.moody.py.connector.route.instagram.InstagramRouteBuilder">
+        <property name="requestProcessor" ref="instagramRequestProcessor"/>
+        <property name="responseProcessor" ref="instagramResponseProcessor"/>
+        <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
+        <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
+    </bean>
+
     <!-- Camel Context -->
     <camelContext id="m-py-context" xmlns="http://camel.apache.org/schema/blueprint">
         <routeBuilder ref="twitterRouteBuilder"/>
@@ -129,6 +129,7 @@
         <routeBuilder ref="yahooWeatherRouteBuilder"/>
         <routeBuilder ref="discogsArtistSearchRouteBuilder"/>
         <routeBuilder ref="discogsGenreSearchRouteBuilder"/>
+        <routeBuilder ref="instagramRouteBuilder"/>
 
         <restConfiguration component="netty4-http" bindingMode="auto" contextPath="/m-py/api">
             <endpointProperty key="nettySharedHttpServer" value="#httpServer" />

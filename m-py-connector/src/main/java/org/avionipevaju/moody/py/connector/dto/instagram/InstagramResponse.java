@@ -2,7 +2,7 @@ package org.avionipevaju.moody.py.connector.dto.instagram;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ExecutionResponse {
+public class InstagramResponse {
 
     private String username;
 
@@ -12,7 +12,7 @@ public class ExecutionResponse {
     private String caption;
 
 
-    public ExecutionResponse() {
+    public InstagramResponse() {
     }
 
 

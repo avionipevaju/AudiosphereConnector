@@ -29,13 +29,13 @@ public abstract class GenericRouteBuilder<RequestType, ResponseType> extends Abs
     @Override
     public void configure() throws Exception {
 
-        rest().post(getRestPath())
+        rest().post(getRestPath()).id(getRestPath())
                 .type(getRequestTypeClass()).consumes(Constants.CONTENT_TYPE)
                 .outType(getResponseTypeClass()).produces(Constants.CONTENT_TYPE)
                 .route()
                 .to(getRouteStartPath());
 
-        from(getRouteStartPath())
+        from(getRouteStartPath()).id(getRouteStartPath())
                 .doTry()
                     .process(getRequestProcessor())
                     .marshal().json(JsonLibrary.Jackson)
