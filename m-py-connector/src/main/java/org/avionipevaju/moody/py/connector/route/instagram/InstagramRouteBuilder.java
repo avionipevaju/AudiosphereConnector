@@ -17,17 +17,21 @@ public class InstagramRouteBuilder extends AbstractRouteBuilder {
                 .outType(InstagramResponse.class).produces(Constants.CONTENT_TYPE)
                 .route()
                 .doTry()
-                    .process(getRequestProcessor())
-                    .setHeader(Exchange.HTTP_METHOD, constant("GET"))
-                    .removeHeader(Exchange.HTTP_PATH)
-                    .recipientList().exchangeProperty(Constants.INSTAGRAM_SCHEDULER_URL)
-                    .unmarshal().json(JsonLibrary.Jackson, InstagramResponse.class)
-                    .process(getResponseProcessor())
+                    .to("direct:Instagram")
                 .endDoTry()
                 .doCatch(HttpOperationFailedException.class)
                     .process(getHttpOperationFailedExceptionProcessor())
                 .doCatch(Throwable.class)
                     .process(getExceptionHandlingProcessor());
+
+        from("direct:Instagram").id("direct:Instagram")
+                .errorHandler(noErrorHandler())
+                .process(getRequestProcessor())
+                .setHeader(Exchange.HTTP_METHOD, constant("GET"))
+                .removeHeader(Exchange.HTTP_PATH)
+                .recipientList().exchangeProperty(Constants.INSTAGRAM_SCHEDULER_URL)
+                .unmarshal().json(JsonLibrary.Jackson, InstagramResponse.class)
+                .process(getResponseProcessor());
 
     }
 }
