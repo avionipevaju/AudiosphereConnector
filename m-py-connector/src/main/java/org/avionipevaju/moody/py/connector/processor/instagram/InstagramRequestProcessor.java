@@ -16,7 +16,7 @@ public class InstagramRequestProcessor extends AbstractProcessor {
     public void process(Exchange exchange) throws Exception {
         String username = exchange.getIn().getHeader("username", String.class);
         String formattedEndpoint = String.format(getEndpoint().concat("?bridgeEndpoint=true"), username);
-        exchange.setProperty(Constants.INSTAGRAM_SCHEDULER_URL, formattedEndpoint);
+        exchange.setProperty(Constants.INSTAGRAM_FORMATTED_URL, formattedEndpoint);
         LOGGER.info("GET ".concat(formattedEndpoint));
     }
 

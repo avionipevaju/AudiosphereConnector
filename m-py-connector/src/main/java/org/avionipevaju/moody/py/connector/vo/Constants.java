@@ -2,7 +2,7 @@ package org.avionipevaju.moody.py.connector.vo;
 
 public class Constants {
 
-    public static final String INSTAGRAM_SCHEDULER_URL = "instagram:scheduler_url";
+    public static final String INSTAGRAM_FORMATTED_URL = "instagram:formatted-url";
 
     public static final String USERNAME_HEADER = "m-py-username";
 
@@ -29,6 +29,8 @@ public class Constants {
         public static final String YOUTUBE_ROUTE = "direct:Youtube";
 
         public static final String TWITTER_ROUTE = "direct:Twitter";
+
+        public static final String INSTAGRAM_ROUTE = "direct:Instagram";
 
     }
 

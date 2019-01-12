@@ -1,7 +1,6 @@
 package org.avionipevaju.moody.py.connector.route.instagram;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.http.common.HttpOperationFailedException;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.avionipevaju.moody.py.connector.dto.instagram.InstagramResponse;
@@ -29,7 +28,7 @@ public class InstagramRouteBuilder extends AbstractRouteBuilder {
                 .process(getRequestProcessor())
                 .setHeader(Exchange.HTTP_METHOD, constant("GET"))
                 .removeHeader(Exchange.HTTP_PATH)
-                .recipientList().exchangeProperty(Constants.INSTAGRAM_SCHEDULER_URL)
+                .recipientList().exchangeProperty(Constants.INSTAGRAM_FORMATTED_URL)
                 .unmarshal().json(JsonLibrary.Jackson, InstagramResponse.class)
                 .process(getResponseProcessor());
 

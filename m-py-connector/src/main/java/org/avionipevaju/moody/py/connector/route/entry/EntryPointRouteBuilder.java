@@ -7,6 +7,7 @@ import org.avionipevaju.moody.py.connector.dto.assembler.TwitterAssembler;
 import org.avionipevaju.moody.py.connector.dto.assembler.YoutubeAssembler;
 import org.avionipevaju.moody.py.connector.dto.discogs.DiscogsResponse;
 import org.avionipevaju.moody.py.connector.dto.entry.EntryRequest;
+import org.avionipevaju.moody.py.connector.dto.instagram.InstagramResponse;
 import org.avionipevaju.moody.py.connector.dto.twitter.TwitterResponse;
 import org.avionipevaju.moody.py.connector.dto.youtube.YoutubeResponse;
 import org.avionipevaju.moody.py.connector.route.AbstractRouteBuilder;
@@ -85,7 +86,25 @@ public class EntryPointRouteBuilder extends AbstractRouteBuilder {
         rest().post("/twitter/instagram-post").id("/twitter/instagram-post")
                 .type(EntryRequest.class).consumes(Constants.CONTENT_TYPE)
                 .route()
-                .log("${body}");
+                .doTry()
+                    .process(exchange -> {
+                        EntryRequest entryRequest = exchange.getIn().getBody(EntryRequest.class);
+                        ExchangeUtils.storeAuthorizationHeadersInExchange(exchange);
+                        ExchangeUtils.storeValueInExchange(exchange, Constants.ENTRY_REQUEST_USERNAME_PROPERTY, entryRequest.getUsername());
+                        exchange.getOut().setHeader("username", entryRequest.getInformation());
+                    })
+                    .to(Constants.Route.INSTAGRAM_ROUTE)
+                    .process(exchange -> {
+                        InstagramResponse instagramResponse = exchange.getIn().getBody(InstagramResponse.class);
+                        ExchangeUtils.returnAuthorizationHeadersFromExchange(exchange);
+                        exchange.getOut().setBody(TwitterAssembler.createTwitterRequest(exchange, instagramResponse));
+                    })
+                    .to(Constants.Route.TWITTER_ROUTE)
+                .endDoTry()
+                .doCatch(HttpOperationFailedException.class)
+                    .process(getHttpOperationFailedExceptionProcessor())
+                .doCatch(Throwable.class)
+                    .process(getExceptionHandlingProcessor());
 
     }
 }
