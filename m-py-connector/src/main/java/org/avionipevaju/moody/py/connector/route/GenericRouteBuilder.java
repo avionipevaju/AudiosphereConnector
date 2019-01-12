@@ -33,19 +33,20 @@ public abstract class GenericRouteBuilder<RequestType, ResponseType> extends Abs
                 .type(getRequestTypeClass()).consumes(Constants.CONTENT_TYPE)
                 .outType(getResponseTypeClass()).produces(Constants.CONTENT_TYPE)
                 .route()
-                .to(getRouteStartPath());
-
-        from(getRouteStartPath()).id(getRouteStartPath())
                 .doTry()
-                    .process(getRequestProcessor())
-                    .marshal().json(JsonLibrary.Jackson)
-                    .to(getEndpoint())
-                    .unmarshal().json(JsonLibrary.Jackson, getResponseTypeClass())
-                    .process(getResponseProcessor())
+                    .to(getRouteStartPath())
                 .doCatch(HttpOperationFailedException.class)
                     .process(getHttpOperationFailedExceptionProcessor())
                 .doCatch(Throwable.class)
                     .process(getExceptionHandlingProcessor());
+
+        from(getRouteStartPath()).id(getRouteStartPath())
+                .errorHandler(noErrorHandler())
+                .process(getRequestProcessor())
+                .marshal().json(JsonLibrary.Jackson)
+                .to(getEndpoint())
+                .unmarshal().json(JsonLibrary.Jackson, getResponseTypeClass())
+                .process(getResponseProcessor());
 
     }
 

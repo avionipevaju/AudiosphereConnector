@@ -132,7 +132,10 @@
         <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
     </bean>
 
-    <bean id="entryPointRouteBuilder" class="org.avionipevaju.moody.py.connector.route.entry.EntryPointRouteBuilder"/>
+    <bean id="entryPointRouteBuilder" class="org.avionipevaju.moody.py.connector.route.entry.EntryPointRouteBuilder">
+        <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
+        <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
+    </bean>
 
     <!-- Camel Context -->
     <camelContext id="m-py-context" xmlns="http://camel.apache.org/schema/blueprint">
