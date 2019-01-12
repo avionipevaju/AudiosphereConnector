@@ -1,17 +1,11 @@
 package org.avionipevaju.moody.py.connector.processor.youtube;
 
-import org.apache.camel.Exchange;
-import org.avionipevaju.moody.py.connector.dto.youtube.YoutubeRequest;
 import org.avionipevaju.moody.py.connector.dto.youtube.YoutubeResponse;
-import org.avionipevaju.moody.py.connector.processor.AbstractProcessor;
+import org.avionipevaju.moody.py.connector.processor.GenericProcessor;
 
-public class YoutubeResponseProcessor extends AbstractProcessor {
+public class YoutubeResponseProcessor extends GenericProcessor<YoutubeResponse> {
 
-    @Override
-    public void process(Exchange exchange) throws Exception {
-        YoutubeResponse youtubeResponse = exchange.getIn().getBody(YoutubeResponse.class);
-        logAsJson(youtubeResponse);
-        exchange.getOut().setBody(youtubeResponse);
+    public YoutubeResponseProcessor() {
+        super(YoutubeResponse.class);
     }
-
 }
