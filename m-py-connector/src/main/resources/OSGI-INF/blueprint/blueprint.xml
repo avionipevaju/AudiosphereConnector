@@ -72,6 +72,8 @@
         <property name="endpoint" value="${moodyPyPostContentEndpoint}"/>
     </bean>
     <bean id="youtubeRouteBuilder" class="org.avionipevaju.moody.py.connector.route.youtube.YoutubeRouteBuilder">
+        <argument value="/youtube-search"/>
+        <argument value="direct:Youtube"/>
         <property name="requestProcessor" ref="youtubeRequestProcessor"/>
         <property name="responseProcessor" ref="youtubeResponseProcessor"/>
         <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
