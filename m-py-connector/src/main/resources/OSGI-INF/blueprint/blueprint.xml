@@ -15,6 +15,8 @@
             <cm:property name="instaFeedGetPostEndpoint" value="def=value"/>
             <cm:property name="youtubeEndpoint" value="def=value"/>
             <cm:property name="yahooWeatherEndpoint" value="def=value"/>
+            <cm:property name="discogsSearchByArtistEndpoint" value="default-value"/>
+            <cm:property name="discogsSearchByGenreEndpoint" value="default-value"/>
         </cm:default-properties>
     </cm:property-placeholder>
 
@@ -48,6 +50,9 @@
 
     <bean id="yahooWeatherRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.yahoo.weather.YahooWeatherRequestProcessor"/>
     <bean id="yahooWeatherResponseProcessor" class="org.avionipevaju.moody.py.connector.processor.yahoo.weather.YahooWeatherResponseProcessor"/>
+
+    <bean id="discogsRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.discogs.DiscogsRequestProcessor"/>
+    <bean id="discogsResponseProcessor" class="org.avionipevaju.moody.py.connector.processor.discogs.DiscogsResponseProcessor"/>
 
     <bean id="instagramSchedulerPreProcessor" class="org.avionipevaju.moody.py.connector.processor.instagram.InstagramSchedulerPreProcessor">
         <property name="endpoint" value="${instaFeedGetPostEndpoint}"/>
@@ -99,10 +104,32 @@
         <property name="endpoint" value="${yahooWeatherEndpoint}"/>
     </bean>
 
+    <bean id="discogsArtistSearchRouteBuilder" class="org.avionipevaju.moody.py.connector.route.discogs.DiscogsRouteBuilder">
+        <argument value="/discogs-artist-search"/>
+        <argument value="direct:DiscogsArtist"/>
+        <property name="requestProcessor" ref="discogsRequestProcessor"/>
+        <property name="responseProcessor" ref="discogsResponseProcessor"/>
+        <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
+        <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
+        <property name="endpoint" value="${discogsSearchByArtistEndpoint}"/>
+    </bean>
+
+    <bean id="discogsGenreSearchRouteBuilder" class="org.avionipevaju.moody.py.connector.route.discogs.DiscogsRouteBuilder">
+        <argument value="/discogs-genre-search"/>
+        <argument value="direct:DiscogsGenre"/>
+        <property name="requestProcessor" ref="discogsRequestProcessor"/>
+        <property name="responseProcessor" ref="discogsResponseProcessor"/>
+        <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
+        <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
+        <property name="endpoint" value="${discogsSearchByGenreEndpoint}"/>
+    </bean>
+
     <!-- Camel Context -->
     <camelContext id="m-py-context" xmlns="http://camel.apache.org/schema/blueprint">
         <routeBuilder ref="youtubeRouteBuilder"/>
         <routeBuilder ref="yahooWeatherRouteBuilder"/>
+        <routeBuilder ref="discogsArtistSearchRouteBuilder"/>
+        <routeBuilder ref="discogsGenreSearchRouteBuilder"/>
 
         <restConfiguration component="netty4-http" bindingMode="auto" contextPath="/m-py/api">
             <endpointProperty key="nettySharedHttpServer" value="#httpServer" />
