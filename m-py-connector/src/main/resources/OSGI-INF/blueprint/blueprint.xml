@@ -10,8 +10,8 @@
     <!-- Configuration File -->
     <cm:property-placeholder persistent-id="configuration" update-strategy="reload">
         <cm:default-properties>
-            <cm:property name="moodyPyExecuteEndpoint" value="def-value"/>
             <cm:property name="moodyTwitterEndpoint" value="def-value"/>
+            <cm:property name="moodyTwitterMoodEndpoint" value="def-value"/>
             <cm:property name="youtubeEndpoint" value="def=value"/>
             <cm:property name="yahooWeatherEndpoint" value="def=value"/>
             <cm:property name="discogsSearchByArtistEndpoint" value="default-value"/>
@@ -75,6 +75,16 @@
         <property name="endpoint" value="${moodyTwitterEndpoint}"/>
     </bean>
 
+    <bean id="twitterMoodRouteBuilder" class="org.avionipevaju.moody.py.connector.route.twitter.TwitterRouteBuilder">
+        <argument value="/twitter-mood"/>
+        <argument value="direct:TwitterMood"/>
+        <property name="requestProcessor" ref="twitterRequestProcessor"/>
+        <property name="responseProcessor" ref="twitterResponseProcessor"/>
+        <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
+        <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
+        <property name="endpoint" value="${moodyTwitterMoodEndpoint}"/>
+    </bean>
+
     <bean id="youtubeRouteBuilder" class="org.avionipevaju.moody.py.connector.route.youtube.YoutubeRouteBuilder">
         <argument value="/youtube-search"/>
         <argument value="direct:Youtube"/>
@@ -125,6 +135,7 @@
     <!-- Camel Context -->
     <camelContext id="m-py-context" xmlns="http://camel.apache.org/schema/blueprint">
         <routeBuilder ref="twitterRouteBuilder"/>
+        <routeBuilder ref="twitterMoodRouteBuilder"/>
         <routeBuilder ref="youtubeRouteBuilder"/>
         <routeBuilder ref="yahooWeatherRouteBuilder"/>
         <routeBuilder ref="discogsArtistSearchRouteBuilder"/>

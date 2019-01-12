@@ -15,6 +15,8 @@ public class TwitterResponse {
 
     private String timestamp;
 
+    private String genre;
+
     public TwitterResponse() {
     }
 
@@ -56,5 +58,13 @@ public class TwitterResponse {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }
