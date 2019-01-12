@@ -2,12 +2,13 @@ package org.avionipevaju.moody.py.connector.route;
 
 import org.apache.camel.http.common.HttpOperationFailedException;
 import org.apache.camel.model.dataformat.JsonLibrary;
-import org.avionipevaju.moody.py.connector.dto.youtube.YoutubeRequest;
 import org.avionipevaju.moody.py.connector.vo.Constants;
 
-public abstract class GenericRouteBuilder<ResponseClass> extends AbstractRouteBuilder {
+public abstract class GenericRouteBuilder<RequestType, ResponseType> extends AbstractRouteBuilder {
 
-    private Class<ResponseClass> responseClass;
+    private Class<RequestType> requestTypeClass;
+
+    private Class<ResponseType> responseTypeClass;
 
     private String restPath;
 
@@ -18,8 +19,9 @@ public abstract class GenericRouteBuilder<ResponseClass> extends AbstractRouteBu
         this.routeStartPath = routeStartPath;
     }
 
-    public GenericRouteBuilder(Class<ResponseClass> responseClass, String restPath, String routeStartPath) {
-        this.responseClass = responseClass;
+    public GenericRouteBuilder(Class<RequestType> requestTypeClass, Class<ResponseType> responseTypeClass, String restPath, String routeStartPath) {
+        this.requestTypeClass = requestTypeClass;
+        this.responseTypeClass = responseTypeClass;
         this.restPath = restPath;
         this.routeStartPath = routeStartPath;
     }
@@ -27,7 +29,7 @@ public abstract class GenericRouteBuilder<ResponseClass> extends AbstractRouteBu
     @Override
     public void configure() throws Exception {
 
-        rest().post(getRestPath()).type(YoutubeRequest.class).consumes(Constants.CONTENT_TYPE)
+        rest().post(getRestPath()).type(getRequestTypeClass()).consumes(Constants.CONTENT_TYPE)
                 .route()
                 .to(getRouteStartPath());
 
@@ -36,7 +38,7 @@ public abstract class GenericRouteBuilder<ResponseClass> extends AbstractRouteBu
                     .process(getRequestProcessor())
                     .marshal().json(JsonLibrary.Jackson)
                     .to(getEndpoint())
-                    .unmarshal().json(JsonLibrary.Jackson, getResponseClass())
+                    .unmarshal().json(JsonLibrary.Jackson, getResponseTypeClass())
                     .process(getResponseProcessor())
                 .doCatch(HttpOperationFailedException.class)
                     .process(getHttpOperationFailedExceptionProcessor())
@@ -61,11 +63,19 @@ public abstract class GenericRouteBuilder<ResponseClass> extends AbstractRouteBu
         this.routeStartPath = routeStartPath;
     }
 
-    public Class<ResponseClass> getResponseClass() {
-        return responseClass;
+    public Class<RequestType> getRequestTypeClass() {
+        return requestTypeClass;
     }
 
-    public void setResponseClass(Class<ResponseClass> responseClass) {
-        this.responseClass = responseClass;
+    public void setRequestTypeClass(Class<RequestType> requestTypeClass) {
+        this.requestTypeClass = requestTypeClass;
+    }
+
+    public Class<ResponseType> getResponseTypeClass() {
+        return responseTypeClass;
+    }
+
+    public void setResponseTypeClass(Class<ResponseType> responseTypeClass) {
+        this.responseTypeClass = responseTypeClass;
     }
 }

@@ -14,6 +14,7 @@
             <cm:property name="moodyPyPostContentEndpoint" value="def-value"/>
             <cm:property name="instaFeedGetPostEndpoint" value="def=value"/>
             <cm:property name="youtubeEndpoint" value="def=value"/>
+            <cm:property name="yahooWeatherEndpoint" value="def=value"/>
         </cm:default-properties>
     </cm:property-placeholder>
 
@@ -41,16 +42,22 @@
     <!-- Processors -->
     <bean id="twitterRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.twitter.TwitterRequestProcessor"/>
     <bean id="twitterResponseProcessor" class="org.avionipevaju.moody.py.connector.processor.twitter.TwitterResponseProcessor"/>
+
     <bean id="youtubeRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.youtube.YoutubeRequestProcessor"/>
     <bean id="youtubeResponseProcessor" class="org.avionipevaju.moody.py.connector.processor.youtube.YoutubeResponseProcessor"/>
-    <bean id="exceptionHandlingProcessor" class="org.avionipevaju.moody.py.connector.processor.exception.ExceptionHandlingProcessor"/>
-    <bean id="httpOperationFailedExceptionProcessor" class="org.avionipevaju.moody.py.connector.processor.exception.HttpOperationFailedExceptionProcessor">
-        <property name="objectMapper" ref="jacksonObjectMapper"/>
-    </bean>
+
+    <bean id="yahooWeatherRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.yahoo.weather.YahooWeatherRequestProcessor"/>
+    <bean id="yahooWeatherResponseProcessor" class="org.avionipevaju.moody.py.connector.processor.yahoo.weather.YahooWeatherResponseProcessor"/>
+
     <bean id="instagramSchedulerPreProcessor" class="org.avionipevaju.moody.py.connector.processor.instagram.InstagramSchedulerPreProcessor">
         <property name="endpoint" value="${instaFeedGetPostEndpoint}"/>
     </bean>
     <bean id="instagramSchedulerRequestProcessor" class="org.avionipevaju.moody.py.connector.processor.instagram.InstagramSchedulerRequestProcessor"/>
+
+    <bean id="exceptionHandlingProcessor" class="org.avionipevaju.moody.py.connector.processor.exception.ExceptionHandlingProcessor"/>
+    <bean id="httpOperationFailedExceptionProcessor" class="org.avionipevaju.moody.py.connector.processor.exception.HttpOperationFailedExceptionProcessor">
+        <property name="objectMapper" ref="jacksonObjectMapper"/>
+    </bean>
 
     <!-- Route Builders -->
     <bean id="twitterSchedulerRouteBuilder" class="org.avionipevaju.moody.py.connector.route.twitter.TwitterSchedulerRouteBuilder">
@@ -71,6 +78,7 @@
         <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
         <property name="endpoint" value="${moodyPyPostContentEndpoint}"/>
     </bean>
+
     <bean id="youtubeRouteBuilder" class="org.avionipevaju.moody.py.connector.route.youtube.YoutubeRouteBuilder">
         <argument value="/youtube-search"/>
         <argument value="direct:Youtube"/>
@@ -81,9 +89,20 @@
         <property name="endpoint" value="${youtubeEndpoint}"/>
     </bean>
 
+    <bean id="yahooWeatherRouteBuilder" class="org.avionipevaju.moody.py.connector.route.yahoo.weather.YahooWeatherRouteBuilder">
+        <argument value="/yahoo-weather"/>
+        <argument value="direct:YahooWeather"/>
+        <property name="requestProcessor" ref="yahooWeatherRequestProcessor"/>
+        <property name="responseProcessor" ref="yahooWeatherResponseProcessor"/>
+        <property name="exceptionHandlingProcessor" ref="exceptionHandlingProcessor"/>
+        <property name="httpOperationFailedExceptionProcessor" ref="httpOperationFailedExceptionProcessor"/>
+        <property name="endpoint" value="${yahooWeatherEndpoint}"/>
+    </bean>
+
     <!-- Camel Context -->
     <camelContext id="m-py-context" xmlns="http://camel.apache.org/schema/blueprint">
         <routeBuilder ref="youtubeRouteBuilder"/>
+        <routeBuilder ref="yahooWeatherRouteBuilder"/>
 
         <restConfiguration component="netty4-http" bindingMode="auto" contextPath="/m-py/api">
             <endpointProperty key="nettySharedHttpServer" value="#httpServer" />
