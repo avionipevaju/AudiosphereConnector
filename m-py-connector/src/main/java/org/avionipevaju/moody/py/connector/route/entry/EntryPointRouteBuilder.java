@@ -1,6 +1,5 @@
 package org.avionipevaju.moody.py.connector.route.entry;
 
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.http.common.HttpOperationFailedException;
 import org.avionipevaju.moody.py.connector.dto.assembler.DiscogsAssembler;
 import org.avionipevaju.moody.py.connector.dto.assembler.TwitterAssembler;
