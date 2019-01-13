@@ -30,7 +30,11 @@ public class Constants {
 
         public static final String TWITTER_ROUTE = "direct:Twitter";
 
+        public static final String TWITTER_MOOD_ROUTE = "direct:TwitterMood";
+
         public static final String INSTAGRAM_ROUTE = "direct:Instagram";
+
+        public static final String YAHOO_WEATHER_ROUTE = "direct:YahooWeather";
 
     }
 

@@ -4,11 +4,13 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.http.common.HttpOperationFailedException;
 import org.avionipevaju.moody.py.connector.dto.assembler.DiscogsAssembler;
 import org.avionipevaju.moody.py.connector.dto.assembler.TwitterAssembler;
+import org.avionipevaju.moody.py.connector.dto.assembler.YahooWeatherAssembler;
 import org.avionipevaju.moody.py.connector.dto.assembler.YoutubeAssembler;
 import org.avionipevaju.moody.py.connector.dto.discogs.DiscogsResponse;
 import org.avionipevaju.moody.py.connector.dto.entry.EntryRequest;
 import org.avionipevaju.moody.py.connector.dto.instagram.InstagramResponse;
 import org.avionipevaju.moody.py.connector.dto.twitter.TwitterResponse;
+import org.avionipevaju.moody.py.connector.dto.yahoo.weather.YahooWeatherResponse;
 import org.avionipevaju.moody.py.connector.dto.youtube.YoutubeResponse;
 import org.avionipevaju.moody.py.connector.route.AbstractRouteBuilder;
 import org.avionipevaju.moody.py.connector.utils.ExchangeUtils;
@@ -81,7 +83,42 @@ public class EntryPointRouteBuilder extends AbstractRouteBuilder {
         rest().post("/twitter/song-by-weather").id("/twitter/song-by-weather")
                 .type(EntryRequest.class).consumes(Constants.CONTENT_TYPE)
                 .route()
-                .log("${body}");
+                .doTry()
+                    .process(exchange -> {
+                        EntryRequest entryRequest = exchange.getIn().getBody(EntryRequest.class);
+                        ExchangeUtils.storeAuthorizationHeadersInExchange(exchange);
+                        ExchangeUtils.storeValueInExchange(exchange, Constants.ENTRY_REQUEST_USERNAME_PROPERTY, entryRequest.getUsername());
+                        exchange.getOut().setBody(YahooWeatherAssembler.createYahooWeatherRequest(entryRequest));
+                    })
+                    .to(Constants.Route.YAHOO_WEATHER_ROUTE)
+                    .process(exchange -> {
+                        YahooWeatherResponse yahooWeatherResponse = exchange.getIn().getBody(YahooWeatherResponse.class);
+                        ExchangeUtils.returnAuthorizationHeadersFromExchange(exchange);
+                        exchange.getOut().setBody(TwitterAssembler.createTwitterRequest(exchange, yahooWeatherResponse));
+                    })
+                    .to(Constants.Route.TWITTER_MOOD_ROUTE)
+                    .process(exchange -> {
+                        TwitterResponse twitterResponse = exchange.getIn().getBody(TwitterResponse.class);
+                        exchange.getOut().setBody(DiscogsAssembler.createDiscogsGenreRequest(twitterResponse));
+                    })
+                    .to(Constants.Route.DISCOGS_GENRE_ROUTE)
+                    .process(exchange -> {
+                        DiscogsResponse discogsResponse = exchange.getIn().getBody(DiscogsResponse.class);
+                        ExchangeUtils.storeValueInExchange(exchange, "content", discogsResponse.getRandomTrack());
+                        exchange.getOut().setBody(YoutubeAssembler.createYoutubeRequest(discogsResponse, true));
+                    })
+                    .to(Constants.Route.YOUTUBE_ROUTE)
+                    .process(exchange -> {
+                        YoutubeResponse youtubeResponse = exchange.getIn().getBody(YoutubeResponse.class);
+                        ExchangeUtils.returnAuthorizationHeadersFromExchange(exchange);
+                        exchange.getOut().setBody(TwitterAssembler.createTwitterRequest(exchange, youtubeResponse));
+                    })
+                    .to(Constants.Route.TWITTER_ROUTE)
+                .endDoTry()
+                .doCatch(HttpOperationFailedException.class)
+                    .process(getHttpOperationFailedExceptionProcessor())
+                .doCatch(Throwable.class)
+                    .process(getExceptionHandlingProcessor());
 
         rest().post("/twitter/instagram-post").id("/twitter/instagram-post")
                 .type(EntryRequest.class).consumes(Constants.CONTENT_TYPE)
