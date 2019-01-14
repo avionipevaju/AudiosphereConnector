@@ -8,6 +8,7 @@
         <artifactId>m-py-parent</artifactId>
         <groupId>org.avionipevaju.moody.py</groupId>
         <version>1.0.0</version>
+        <relativePath>../m-py-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>m-py-connector</artifactId>
