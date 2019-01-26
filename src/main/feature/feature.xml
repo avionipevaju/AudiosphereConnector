@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.4.0" name="${artifactId}">
-    <repository>mvn:org.avionipevaju.moody.py/m-py-environment/${environment.version}/xml/features</repository>
+    <repository>mvn:org.avionipevaju.audiosphere/audiosphere-environment/${environment.version}/xml/features</repository>
     <feature name="${artifactId}" description="${name}" version="${version}">
-        <feature>m-py-environment</feature>
-        <bundle>mvn:org.avionipevaju.moody.py/m-py-connector/${connector.version}</bundle>
+        <feature>audiosphere-environment</feature>
+        <bundle>mvn:org.avionipevaju.audiosphere/audiosphere-connector/${connector.version}</bundle>
     </feature>
 </features>

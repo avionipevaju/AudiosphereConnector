@@ -5,18 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>m-py-core</artifactId>
-        <groupId>org.avionipevaju.moody.py</groupId>
+        <groupId>org.avionipevaju.audiosphere</groupId>
+        <artifactId>audiosphere-core</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>m-py-parent</artifactId>
+    <artifactId>audiosphere-parent</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
-    <name>MoodyPy Connector Parent</name>
+    <name>Audiosphere Connector Parent</name>
 
-    <description>Parent pom for MoodyPy Connector.</description>
+    <description>Parent pom for Audiosphere Connector.</description>
 
     <organization>
         <name>Racunarski Fakultet - RAF</name>

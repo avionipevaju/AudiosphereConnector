@@ -138,7 +138,7 @@
     </bean>
 
     <!-- Camel Context -->
-    <camelContext id="m-py-context" xmlns="http://camel.apache.org/schema/blueprint">
+    <camelContext id="audiosphere-connector-context" xmlns="http://camel.apache.org/schema/blueprint">
         <routeBuilder ref="twitterRouteBuilder"/>
         <routeBuilder ref="twitterMoodRouteBuilder"/>
         <routeBuilder ref="youtubeRouteBuilder"/>
