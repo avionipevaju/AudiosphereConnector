@@ -8,16 +8,18 @@
         <groupId>org.avionipevaju.audiosphere</groupId>
         <artifactId>audiosphere-parent</artifactId>
         <version>1.0.0</version>
-        <relativePath>../m-py-parent/pom.xml</relativePath>
+        <relativePath>../audiosphere-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>audiosphere-environment</artifactId>
+    <artifactId>audiosphere-connector</artifactId>
     <version>1.0.0</version>
-    <packaging>feature</packaging>
+    <packaging>bundle</packaging>
 
-    <name>Audiosphere Connector Environment</name>
+    <name>Audiosphere Connector</name>
 
-    <description>Provides necessary bundles for Audiosphere Connector to run correctly in Apache Karaf.</description>
+    <description>
+        Connector that enables integration with Audiosphere service ecosystem. Audiosphere: https://github.com/avionipevaju/Audiosphere
+    </description>
 
     <organization>
         <name>Racunarski Fakultet - RAF</name>
@@ -77,6 +79,33 @@
                         <goals>
                             <goal>features-generate-descriptor</goal>
                         </goals>
+                        <configuration>
+                            <primaryFeatureName>m-py-connector</primaryFeatureName>
+                            <includeProjectArtifact>true</includeProjectArtifact>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>src/main/etc/configuration.cfg</file>
+                                    <type>cfg</type>
+                                    <classifier>config</classifier>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -91,6 +120,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>

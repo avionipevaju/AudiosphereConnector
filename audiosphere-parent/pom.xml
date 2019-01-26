@@ -6,7 +6,7 @@
 
     <parent>
         <groupId>org.avionipevaju.audiosphere</groupId>
-        <artifactId>core</artifactId>
+        <artifactId>audiosphere-core</artifactId>
         <version>1.0.0</version>
     </parent>
 

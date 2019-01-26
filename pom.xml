@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.avionipevaju.audiosphere</groupId>
-    <artifactId>core</artifactId>
+    <artifactId>audiosphere-core</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
 
     <modules>
-        <module>m-py-parent</module>
-        <module>m-py-connector</module>
-        <module>m-py-environment</module>
+        <module>audiosphere-parent</module>
+        <module>audiosphere-connector</module>
+        <module>audiosphere-environment</module>
     </modules>
 
     <name>Audiosphere Connector Core</name>
