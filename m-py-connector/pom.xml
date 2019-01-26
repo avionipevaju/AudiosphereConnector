@@ -5,20 +5,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>m-py-parent</artifactId>
-        <groupId>org.avionipevaju.moody.py</groupId>
+        <groupId>org.avionipevaju.audiosphere</groupId>
+        <artifactId>audiosphere-parent</artifactId>
         <version>1.0.0</version>
         <relativePath>../m-py-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>m-py-connector</artifactId>
+    <artifactId>audiosphere-connector</artifactId>
     <version>1.0.0</version>
     <packaging>bundle</packaging>
 
-    <name>MoodyPy Connector</name>
+    <name>Audiosphere Connector</name>
 
     <description>
-        Connector that enables integration with MoodyPy Twitter bot. MoodyPy: https://github.com/avionipevaju/MoodyPy
+        Connector that enables integration with Audiosphere service ecosystem. Audiosphere: https://github.com/avionipevaju/Audiosphere
     </description>
 
     <organization>

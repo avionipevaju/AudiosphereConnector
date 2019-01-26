@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.avionipevaju.moody.py</groupId>
-    <artifactId>m-py-core</artifactId>
+    <groupId>org.avionipevaju.audiosphere</groupId>
+    <artifactId>core</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
 
@@ -15,9 +15,9 @@
         <module>m-py-environment</module>
     </modules>
 
-    <name>MoodyPy Connector Core</name>
+    <name>Audiosphere Connector Core</name>
 
-    <description>Core project for MoodyPy Connector</description>
+    <description>Core project for Audiosphere Connector</description>
 
     <organization>
         <name>Racunarski Fakultet - RAF</name>

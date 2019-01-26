@@ -5,19 +5,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>m-py-parent</artifactId>
-        <groupId>org.avionipevaju.moody.py</groupId>
+        <groupId>org.avionipevaju.audiosphere</groupId>
+        <artifactId>audiosphere-parent</artifactId>
         <version>1.0.0</version>
         <relativePath>../m-py-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>m-py-environment</artifactId>
+    <artifactId>audiosphere-environment</artifactId>
     <version>1.0.0</version>
     <packaging>feature</packaging>
 
-    <name>MoodyPy Connector Environment</name>
+    <name>Audiosphere Connector Environment</name>
 
-    <description>Provides necessary bundles for MoodyPy Connector to run correctly in Apache Karaf.</description>
+    <description>Provides necessary bundles for Audiosphere Connector to run correctly in Apache Karaf.</description>
 
     <organization>
         <name>Racunarski Fakultet - RAF</name>
