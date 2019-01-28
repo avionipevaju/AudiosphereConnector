@@ -148,7 +148,7 @@
         <routeBuilder ref="instagramRouteBuilder"/>
         <routeBuilder ref="entryPointRouteBuilder"/>
 
-        <restConfiguration component="netty4-http" bindingMode="auto" contextPath="/m-py/api">
+        <restConfiguration component="netty4-http" bindingMode="auto" contextPath="/audiosphere/api">
             <endpointProperty key="nettySharedHttpServer" value="#httpServer" />
         </restConfiguration>
     </camelContext>
