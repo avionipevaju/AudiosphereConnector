@@ -16,7 +16,6 @@
         <feature>camel-netty4</feature>
         <feature>camel-netty4-http</feature>
         <feature>camel-metrics</feature>
-        <!--<bundle>mvn:com.fasterxml/jackson-xml-databind/0.6.2</bundle>-->
         <bundle>mvn:com.fasterxml.jackson.core/jackson-core/${jackson.version}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/${jackson.version}</bundle>
         <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/${jackson.version}</bundle>

@@ -80,7 +80,7 @@
                             <goal>features-generate-descriptor</goal>
                         </goals>
                         <configuration>
-                            <primaryFeatureName>m-py-connector</primaryFeatureName>
+                            <primaryFeatureName>audiosphere-connector</primaryFeatureName>
                             <includeProjectArtifact>true</includeProjectArtifact>
                         </configuration>
                     </execution>

@@ -9,7 +9,7 @@ import java.util.Base64;
 
 public class SecurityUtils {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(SecurityUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityUtils.class);
 
     public static String generatePasskey(Exchange exchange) {
         String username = exchange.getIn().getHeader(Constants.USERNAME_HEADER, String.class);
