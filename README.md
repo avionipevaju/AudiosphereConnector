@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/avionipevaju/AudiosphereConnector.svg?branch=master)](https://travis-ci.org/avionipevaju/AudiosphereConnector)
 # AudiosphereConnector
-Java OSGI project that relies heavily on Apache Camel framework that enables integration with Audiosphere platform. https://github.com/avionipevaju/Audiosphere
+Java OSGI project that relies heavily on Apache Camel framework which enables integration with Audiosphere platform. https://github.com/avionipevaju/Audiosphere
 
 ## Getting Started
 
