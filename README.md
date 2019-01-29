@@ -8,26 +8,47 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+Before running AudiosphereConnector locally the following requirements must be met
+  - Apache Karaf container setup on your local machine
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+1. Download latest Apache Karaf runtime from https://karaf.apache.org/download.html and unpack
 
 ```
-Give the example
-```
-
-And repeat
+wget -P opt/  https://www-eu.apache.org/dist/karaf/4.2.2/apache-karaf-4.2.2.tar.gz
 
 ```
-until finished
+
+2. Unpack Apache Karaf archive
+
+```
+tar xvzf opt/test/apache-karaf-4.2.2.tar.gz -C opt
+```
+
+3. Build project - Run maven install inside project directory
+
+```
+mvn clean install
+```
+
+4. Start Karaf and install AudiosphereConnector
+
+```
+cd opt/apache-karaf-4.2.2
+./bin/start
+./bin/client
+```
+You will be displayed a Karaf console. Inside the console run
+
+```
+feature:repo-add mvn:org.avionipevaju.audiosphere/audiosphere-core/1.0.0/xml/features
+feature:install audiosphere-core
+```
+You can check the logs if everything is correctly started
+
+```
+console:log tail
 ```
 
 End with an example of getting some data out of the system or using it for a little demo
