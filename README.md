@@ -10,6 +10,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 Before running AudiosphereConnector locally the following requirements must be met
   - Apache Karaf container setup on your local machine
+  - [Audiosphere project](https://github.com/avionipevaju/Audiosphere) running localy 
 
 ### Installing
 
@@ -39,17 +40,19 @@ cd opt/apache-karaf-4.2.2
 ./bin/start
 ./bin/client
 ```
-You will be displayed a Karaf console. Inside the console run
+&nbsp;&nbsp;&nbsp;You will be displayed a Karaf console. Inside the console run
 
 ```
 feature:repo-add mvn:org.avionipevaju.audiosphere/audiosphere-core/1.0.0/xml/features
 feature:install audiosphere-core
 ```
-You can check the logs if everything is correctly started
+&nbsp;&nbsp;&nbsp;You can check the logs if everything is correctly started
 
 ```
 console:log tail
 ```
+
+5. Get [Audiosphere project](https://github.com/avionipevaju/Audiosphere) and follow the readme instruction to get it setup
 
 End with an example of getting some data out of the system or using it for a little demo
 
